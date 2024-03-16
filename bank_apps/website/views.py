@@ -11,7 +11,9 @@ def login(request):
 
 def otp(request):
     return render(request, 'otp.html')
-
+    
+def main(request):
+    return render(request, 'main.html')
 # def signup1(request):
 #    return render(request, 'signup1.html')
 
