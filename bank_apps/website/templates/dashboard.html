@@ -1,0 +1,126 @@
+{% load static %}
+<html>
+<style>
+    .dashboardContainer {
+        padding: 3rem;
+    }
+
+    .flexRow {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .flexBox {
+        width: 20rem;
+        height: 6rem;
+        background-color: white;
+        border-radius: 8px;
+    }
+
+    .flexBox1 {
+        width: 20rem;
+        height: 4rem;
+        background-color: white;
+        border-radius: 8px;
+    }
+
+    .align {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    .align1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0;
+        padding: 0.2rem;
+    }
+
+    .textAlign {
+        padding-left: 1.5rem;
+        line-height: 8px;
+    }
+
+    img {
+        margin-top: 0.6rem;
+    }
+</style>
+
+<body>
+    <div class="dashboardContainer">
+        <div class="row">Good Morning</div>
+        <div class="row">
+            <h2>Lincoln</h6>
+        </div>
+        <div class="flexRow">
+            <div class="flexBox">
+                <div class="row align">
+                    <img src="{% static 'img/pounds_icon.png' %}" alt="image">
+                    <div class="textAlign">
+                        <p>Total Balance</p>
+                        <b>&pound;
+                            12386</b>
+                    </div>
+                </div>
+
+            </div>
+            <div class="flexBox">
+                <div class="row align">
+                    <img src="{% static 'img/income.png' %}" alt="image">
+                    <div class="textAlign">
+                        <p>Total Income</p>
+                        <b>&pound;
+                            12386</b>
+                    </div>
+                </div>
+            </div>
+            <div class="flexBox">
+                <div class="row align">
+                    <img src="{% static 'img/outcome.png' %}" alt="image">
+                    <div class="textAlign">
+                        <p>Total Outcome</p>
+                        <b>&pound;
+                            12386</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Quick Actions</h4>
+        </div>
+        <div class="flexRow">
+            <div class="flexBox1">
+                <div class="row align1">
+                    <img src="{% static 'img/transfer.png' %}" alt="image">
+                    <div class="textAlign">
+                        <h3>Transfer</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="flexBox1">
+                <div class="row align1">
+                    <img src="{% static 'img/withdraw.png' %}" alt="image">
+                    <div class="textAlign">
+                        <h3>Withdraw</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="flexBox1">
+                <div class="row align1">
+                    <img src="{% static 'img/deposit.png' %}" alt="image">
+                    <div class="textAlign">
+                        <h3>Deposit</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Recent Transaction</h4>
+        </div>
+    </div>
+</body>
+
+</html>

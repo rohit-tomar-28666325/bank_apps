@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+
+<!-- {% block content %} -->
+
+<html>
+
+<head>
+    <style>
+        .container {
+            margin: 0;
+        }
+
+        .right {
+            width: 85%;
+            float: right;
+            margin-top: 0;
+            background-color: grey;
+            height: calc(100vh - 4rem);
+        }
+
+        .left {
+            width: 15%;
+            float: left;
+            margin-top: 0;
+            background-color: #ffffff;
+            height: calc(100vh - 4rem);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 1.5rem;
+            background-color: aliceblue;
+        }
+
+        .vertical-menu {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+        }
+
+        .vertical-menu 
+        {
+            div {
+            background-color: #ffffff;
+            color: black;
+            display: block;
+            text-decoration: none;
+        }
+    }
+
+        .vertical-menu {
+            div:hover {
+            background-color: #97144d;
+            color: #ffffff
+        }
+    }
+
+        .vertical-menu {
+            div:active {
+            background-color: #97144d;
+            color: #ffffff
+        }
+    }
+
+        .itemNav {
+            display: flex !important;
+            justify-content: space-evenly;
+            align-items: center;
+            padding-left: 0rem;
+            padding-right: 2rem;
+        }
+
+        .active {
+            background-color: #97144d;
+            color: #ffffff
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+    </style>
+    <script>
+        function showContent(option) {
+            // Hide all content divs
+            document.querySelectorAll('.content').forEach(function (el) {
+                el.style.display = 'none';
+            });
+
+            // Show the content div corresponding to the clicked menu item
+            document.getElementById(option + '-content').style.display = 'block';
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header"> </div>
+        <div class="left">
+            <div class="vertical-menu" id="menuNav">
+                <div class="itemNav active" onclick="showContent('dashboardOption')" id="dashboardOption">
+                    <img src="{% static 'img/dashboard.png' %}" alt="image">
+                    <p>Dashboard</p>
+                </div>
+                <div class="itemNav" onclick="showContent('transactionOption')" id="transactionOption">
+                    <img src="{% static 'img/transaction.png' %}" alt="image">
+                    <p>Transaction</p>
+                </div>
+                <div class="itemNav" onclick="showContent('cardOption')" id="cardOption" style="padding-right: 4.5rem;">
+                    <img src="{% static 'img/card.png' %}" alt="image">
+                    <p>Card</p>
+                </div>
+                <div class="itemNav" onclick="showContent('loanOption')" id="loanOption" style="padding-right: 4.5rem;">
+                    <img src="{% static 'img/loan.png' %}" alt="image">
+                    <p>Loan</p>
+                </div>
+                <div class="itemNav" onclick="showContent('investmentOption')" id="investmentOption">
+                    <img src="{% static 'img/investment.png' %}" alt="image">
+                    <p>Investment</p>
+                </div>
+                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption" style="padding-right: 3.5rem;">
+                    <img src="{% static 'img/setting.png' %}" alt="image">
+                    <p>Settings</p>
+                </div>
+            </div>
+            <div class="vertical-menu menu">
+                <a href="#">Log out</a>
+                <a href="#">Help</a>
+            </div>
+        </div>
+        <div class="right">
+            <div id="dashboardOption-content" class="content" style="display: none;">
+                {% block dashboard %}
+                {% include "dashboard.html" %}
+                {% endblock %}
+
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+</html>
+<!--style="padding: 1px 80px;-->
+<!-- {% endblock content %} -->
