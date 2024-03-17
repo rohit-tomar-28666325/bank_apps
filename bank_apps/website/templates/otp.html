@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<!-- {% block content %} -->
+
+<html>
+
+<head>
+    <style>
+        .container {
+            margin: 0;
+        }
+
+        .left {
+            width: 40%;
+            float: left;
+            margin-top: 0;
+            background-color: #97144D;
+            height: 100vh;
+        }
+
+        .right {
+            width: 60%;
+            float: right;
+            margin-top: 0;
+            background-color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .midSection {
+            padding-left: 10rem;
+            padding-right: 10rem;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            padding-top: 2rem;
+            padding-bottom: 4.5rem;
+
+        }
+
+        .flex-container>div {
+            background-color: #ffffff;
+            width: 40px;
+            margin: 24px;
+            text-align: center;
+            font-size: 28px;
+            border-radius: 7px;
+            border: 0.1px solid #6E6666;
+        }
+
+        .btnSection {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: inherit;
+            border-radius: 0.7;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #ffffff;
+            border-radius: 7px ;
+            border: 0.5px solid #000000
+        }
+
+        .marginBottom {
+            margin-bottom: 0.5rem;
+            background-color: #97144D;
+            border: 1px solid #97144D;
+            color: #ffffff
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+        </div>
+        <div class="right">
+            <h1> OTP Verification</h1>
+            <p class="midSection">Enter the code sent to your email f********nka@gmail.com. Be careful not to share your
+                code with anyone</p>
+            <div class="flex-container">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+            </div>
+            <div class="btnSection">
+                <input class="btn marginBottom" type="submit" name="verify" value="Verify Email" />
+                <input class="btn" type="submit" name="cancel" value="Cancel" />
+                <a href="/main">Proceed to dashboard</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+<!--style="padding: 1px 80px;-->
+<!-- {% endblock content %} -->
