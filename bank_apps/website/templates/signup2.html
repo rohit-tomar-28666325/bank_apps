@@ -1,0 +1,51 @@
+<!-- {% extends "base.html" %} -->
+
+<!-- {% block content %} -->
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <style>
+        /* Define styles for different sections */
+        .section1 {
+            width: 45%;
+            height: 750px; /* Set the width of the first section */
+            background-color: #931a46; /* Set the background color of the first section */
+            float: left; /* Float the element to the left to make it appear horizontally */
+        }
+        
+        /* Clearfix to clear floats */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+  </head>
+
+<body>
+  <div class="section1">
+    <h1 style="transform: translate(875px, 100px)">Online Banking Services</h1>
+    <p style="transform: translate(1000px, 115px); color:grey">login into your account</p>
+    <form action="/action_page.php" style="transform: translate(875px, 135px)">
+        <hr width="60px" color="grey" style="transform: translate(-250px, 5px)"/>
+        <hr width="60px" color="#931a46" style="transform: translate(-150px, -4.5px)"/>
+        <hr width="60px" color="grey" style="transform: translate(-50px, -14px)"/>
+        <hr width="60px" color="grey" style="transform: translate(50px, -23.5px)"/>
+        <label for="title" style="color:grey; font-size:11px;">Email</label><br>
+        <input type="text" id="title" name="title" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
+        <label for="fname" style="color:grey; font-size:11px;">Phone Number</label><br>
+        <input type="text" id="fname" name="fname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+        <label for="fname" style="color:grey; font-size:11px;">Date of Birth</label><br>
+        <input type="text" id="fname" name="fname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+        <a style="background-color: white; color:#931a46 ;font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="signup1.html">Back</a>
+        <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="signup3.html">Proceed</a>
+        <p style="transform: translate(58px, 30px)">Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="login.html">Sign In</a></p>
+      </form> 
+  </div>
+</body>
+
+</html>
+      <!--style="padding: 1px 80px;-->
+<!-- {% endblock content %} -->
