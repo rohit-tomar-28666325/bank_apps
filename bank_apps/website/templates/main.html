@@ -138,6 +138,36 @@
                 {% endblock %}
 
             </div>
+            <div id="transactionOption-content" class="content" style="display: none;">
+                {% block transaction %}
+                {% include "transaction.html" %}
+                {% endblock %}
+
+            </div>
+            <div id="cardOption-content" class="content" style="display: none;">
+                {% block card %}
+                {% include "card.html" %}
+                {% endblock %}
+
+            </div>
+            <div id="loanOption-content" class="content" style="display: none;">
+                {% block loan %}
+                {% include "loan.html" %}
+                {% endblock %}
+
+            </div>
+            <div id="investmentOption-content" class="content" style="display: none;">
+                {% block investment %}
+                {% include "investment.html" %}
+                {% endblock %}
+
+            </div>
+            <div id="settingsOption-content" class="content" style="display: none;">
+                {% block settings %}
+                {% include "settings.html" %}
+                {% endblock %}
+
+            </div>
 
 
         </div>
