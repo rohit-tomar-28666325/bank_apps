@@ -1,51 +1,75 @@
-<!-- {% extends "base.html" %} -->
 
-<!-- {% block content %} -->
 
-<!DOCTYPE html>
+
 
 <html>
   <head>
     <style>
-        /* Define styles for different sections */
-        .section1 {
-            width: 45%;
-            height: 750px; /* Set the width of the first section */
-            background-color: #931a46; /* Set the background color of the first section */
-            float: left; /* Float the element to the left to make it appear horizontally */
-        }
-        
-        /* Clearfix to clear floats */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
+      .container {
+        margin: 0;
+      }
+  
+      .left {
+        width: 40% !important;
+        float: left !important;
+        margin-top: 0 !important;
+        background-color: #97144D !important;
+        height: 100vh !important;
+      }
+  
+      .right {
+        width: 60% !important;
+        float: right !important;
+        margin-top: 0 !important;
+        background-color: #ffffff !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: column !important;
+      }
+  
+      .alignAccordion {
+        display: flex;
+      }
+  
+      .alignSignUps {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+      }
     </style>
   </head>
 
 <body>
-  <div class="section1">
-    <h1 style="transform: translate(875px, 100px)">Online Banking Services</h1>
-    <p style="transform: translate(1000px, 115px); color:grey">login into your account</p>
-    <form action="/action_page.php" style="transform: translate(875px, 135px)">
-        <hr width="60px" color="grey" style="transform: translate(-250px, 5px)"/>
-        <hr width="60px" color="grey" style="transform: translate(-150px, -5px)"/>
-        <hr width="60px" color="#931a46" style="transform: translate(-50px, -14.5px)"/>
-        <hr width="60px" color="grey" style="transform: translate(50px, -24px)"/>
-        <label for="title" style="color:grey; font-size:11px;">Address</label><br>
-        <input type="text" id="title" name="title" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-        <label for="fname" style="color:grey; font-size:11px;">City / Town</label><br>
-        <input type="text" id="fname" name="fname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-        <label type="text" id="mname" name="mname" style="color:grey; font-size:11px;">County<label type="text" id="lname" name="lname" style="color:grey; font-size:11px;"><span style="display:inline-block; width: 125px;"></span>Post Code</label></label><br>
-        <input type="text" id="mname" name="mname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><span style="display:inline-block; width: 2px;"></span><input type="text" id="lname" name="lname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-        <a style="background-color: white; color:#931a46; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="signup2.html">Back</a>
-        <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="signup4.html">Proceed</a>
-        <p style="transform: translate(58px, 30px)">Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="login.html">Sign In</a></p>
+  <div class="container">
+    <div class="left">
+    </div>
+    <div class="right alignSignUps ">
+        <h1>Online Banking Services</h1>
+        <p style="color:grey">login into your account</p>
+        <form method="POST"  style="width:45%">
+          {% csrf_token %}
+          <div class="alignAccordion">
+            <hr width="60px" color="grey" />
+            <hr width="60px" color="grey" />
+            <hr width="60px" color="#931a46" />
+            <hr width="60px" color="grey" />
+          </div>
+        <label for="address" style="color:grey; font-size:11px;">Address</label><br>
+        <input type="text" id="address" name="address" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
+        <label for="city" style="color:grey; font-size:11px;">City / Town</label><br>
+        <input type="text" id="city" name="city" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+        <label type="text" id="country" for="country" style="color:grey; font-size:11px;">County
+        <label type="text" id="postal_code" name="postal_code" style="color:grey; font-size:11px;"><span style="display:inline-block; width: 125px;"></span>Post Code</label></label><br>
+        <input type="text" id="country" name="country" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><span style="display:inline-block; width: 2px;"></span><input type="text" id="postal_code" name="postal_code" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
+        <input type = "submit" name ="actionBtn" value="Back" style="background-color: white; color:#931a46; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
+        <input type = "submit" name ="actionBtn" value="Proceed" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" />
+        <p>Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="/login">Sign In</a></p>
       </form> 
   </div>
+</div>
+</div>
 </body>
 
 </html>
 
-<!-- {% endblock content %} -->

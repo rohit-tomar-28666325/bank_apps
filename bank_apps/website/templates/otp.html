@@ -50,7 +50,7 @@
             text-align: center;
             font-size: 28px;
             border-radius: 7px;
-            border: 0.1px solid #6E6666;
+            border: none;
         }
 
         .btnSection {
@@ -66,7 +66,7 @@
             width: 100%;
             padding: 0.7rem;
             background-color: #ffffff;
-            border-radius: 7px ;
+            border-radius: 7px;
             border: 0.5px solid #000000
         }
 
@@ -75,6 +75,14 @@
             background-color: #97144D;
             border: 1px solid #97144D;
             color: #ffffff
+        }
+
+        input[type="text"] {
+            width: 90%;
+            height: 100%;
+            border-radius: 7px;
+            border: 1px solid #6e6666;
+
         }
     </style>
 </head>
@@ -85,21 +93,26 @@
         </div>
         <div class="right">
             <h1> OTP Verification</h1>
-            <p class="midSection">Enter the code sent to your email f********nka@gmail.com. Be careful not to share your
+            <p class="midSection">Enter the code sent to your email <span style="color:red"> {{emailID}} </span>. Be careful not to share your
                 code with anyone</p>
-            <div class="flex-container">
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-                <div>5</div>
-            </div>
-            <div class="btnSection">
-                <input class="btn marginBottom" type="submit" name="verify" value="Verify Email" />
-                <input class="btn" type="submit" name="cancel" value="Cancel" />
-                <a href="/main">Proceed to dashboard</a>
-            </div>
-
+            <form method="POST">
+                {% csrf_token %}
+                <div class="flex-container">
+                    <div><input type="text" name="otp1" /></div>
+                    <div><input type="text" name="otp2" /></div>
+                    <div><input type="text" name="otp3" /></div>
+                    <div><input type="text" name="otp4" /></div>
+                    <div><input type="text" name="otp5" /></div>
+                    <div><input type="text" name="otp6" /></div>
+                </div>
+                {% if error_message %}
+                <p style="color:red; text-align: center;"> {{error_message}}</p>
+                {% endif %}
+                <div class="btnSection">
+                    <input class="btn marginBottom" type="submit" name="actionBtn" value="Verify Email" />
+                    <input class="btn" type="submit" name="actionBtn" value="Cancel" />
+                </div>
+            </form>
         </div>
     </div>
 </body>
