@@ -10,7 +10,7 @@
       width: 40% !important;
       float: left !important;
       margin-top: 0 !important;
-      background-color: #97144D !important;
+      background-color: #97144d !important;
       height: 100vh !important;
     }
 
@@ -35,16 +35,28 @@
       align-items: center !important;
     }
   </style>
+  <script>
+    function validateForm() {
+      var first_name = document.getElementById("first_name").value;
+      var middle_name = document.getElementById("middle_name").value;
+      var last_name = document.getElementById("last_name").value;
+      if (first_name && middle_name && last_name) {
+        return true;
+      } else {
+        alert("Please fill all the fields");
+        return false;
+      }
+    }
+  </script>
 </head>
 
 <body>
   <div class="container">
-    <div class="left">
-    </div>
-    <div class="right alignSignUps ">
+    <div class="left"></div>
+    <div class="right alignSignUps">
       <h1>Online Banking Services</h1>
-      <p style="color:grey">login into your account</p>
-      <form method="POST" style="width:45%">
+      <p style="color: grey">login into your account</p>
+      <form method="POST" style="width: 45%">
         {% csrf_token %}
         <div class="alignAccordion">
           <hr width="60px" color="#931a46" />
@@ -52,26 +64,62 @@
           <hr width="60px" color="grey" />
           <hr width="60px" color="grey" />
         </div>
-        <label for="title" style="color:grey;">Title</label><br>
-        <input type="text" id="title" name="title"
-          style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-        <label for="first_name" style="color:grey;">First name</label><br>
-        <input type="text" id="first_name" name="first_name"
-          style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-        <label type="text" id="middle_name" name="middle_name" style="color:grey; font-size:11px;">Middle name<label
-            type="text" id="last_name" name="last_name" style="color:grey; font-size:11px;"><span
-              style="display:inline-block; width: 125px;"></span>Last name</label></label><br>
-        <input type="text" id="middle_name" name="middle_name"
-          style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><span
-          style="display:inline-block; width: 2px;"></span><input type="text" id="last_name" name="last_name"
-          style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-        <div style="margin-top: 2rem;">
-          <input type="submit" name="actionBtn" value="Proceed"
-            style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" />
+        <label for="title" style="color: grey">Title</label><br />
+        <select id="title" name="title" style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            ">
+          <option value="Mr">Mr</option>
+          <option value="Miss">Miss</option>
+          <option value="Mrs">Mrs</option>
+          <!-- Add more options as needed -->
+        </select><br />
+        <label for="first_name" style="color: grey">First name</label><br />
+        <input type="text" id="first_name" name="first_name" style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            " /><br /><br />
+        <label for="middle_name" style="color: grey; font-size: 11px">Middle name
+          <label for="last_name" style="color: grey; font-size: 11px"><span style="display: inline-block; width: 125px">
+            </span>Last
+            name</label></label><br />
+        <input type="text" id="middle_name" name="middle_name" style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            " /><span style="display: inline-block; width: 2px"></span><input type="text" id="last_name"
+          name="last_name" style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            " /><br />
+        <div style="margin-top: 2rem">
+          <input type="submit" name="actionBtn" value="Proceed" onclick="return validateForm()" style="
+                background-color: #931a46;
+                color: white;
+                font-size: 11px;
+                border: 2px solid grey;
+                border-radius: 7px;
+                padding: 5px;
+              " />
         </div>
-        <p>Already have an account? <a
-            style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"
-            href="/login">Sign In</a></p>
+        <p>
+          Already have an account?
+          <a style="
+                background-color: #931a46;
+                color: white;
+                font-size: 11px;
+                border: 2px solid grey;
+                border-radius: 7px;
+                padding: 5px;
+              " href="/login">Sign In</a>
+        </p>
       </form>
     </div>
   </div>

@@ -38,6 +38,21 @@
         align-items: center !important;
       }
     </style>
+       <script>
+        function validateForm() {
+          var address = document.getElementById("address").value;
+          var city = document.getElementById("city").value;
+          var country = document.getElementById("country").value;
+          var postal_code = document.getElementById("postal_code").value;
+          if (address && city && country && postal_code) {
+            return true;
+          }
+          else {
+            alert("Please fill all the fields");
+            return false
+          }
+        }
+      </script>
   </head>
 
 <body>
@@ -59,11 +74,11 @@
         <input type="text" id="address" name="address" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
         <label for="city" style="color:grey; font-size:11px;">City / Town</label><br>
         <input type="text" id="city" name="city" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-        <label type="text" id="country" for="country" style="color:grey; font-size:11px;">County
-        <label type="text" id="postal_code" name="postal_code" style="color:grey; font-size:11px;"><span style="display:inline-block; width: 125px;"></span>Post Code</label></label><br>
+        <label for="country" style="color:grey; font-size:11px;">County
+        <label for="postal_code" style="color:grey; font-size:11px;"><span style="display:inline-block; width: 125px;"></span>Post Code</label></label><br>
         <input type="text" id="country" name="country" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><span style="display:inline-block; width: 2px;"></span><input type="text" id="postal_code" name="postal_code" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
         <input type = "submit" name ="actionBtn" value="Back" style="background-color: white; color:#931a46; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
-        <input type = "submit" name ="actionBtn" value="Proceed" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" />
+        <input type = "submit" name ="actionBtn" value="Proceed" onclick="return validateForm()" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" />
         <p>Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="/login">Sign In</a></p>
       </form> 
   </div>
