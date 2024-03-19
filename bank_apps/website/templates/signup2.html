@@ -35,6 +35,20 @@
       align-items: center !important;
     }
   </style>
+   <script>
+    function validateForm() {
+      var email = document.getElementById("email").value;
+      var phone_number = document.getElementById("phone_number").value;
+      var dob = document.getElementById("dob").value;
+      if (email && phone_number && dob) {
+        return true;
+      }
+      else {
+        alert("Please fill all the fields");
+        return false
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -53,17 +67,17 @@
           <hr width="60px" color="grey" />
         </div>
         <label for="email" style="color:grey; font-size:11px;">Email</label><br>
-        <input type="text" id="email" name="email"
+        <input type="email" id="email" name="email"
           style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
         <label for="phone_number" style="color:grey; font-size:11px;">Phone Number</label><br>
-        <input type="text" id="phone_number" name="phone_number"
+        <input type="text" id="phone_number" name="phone_number" minlength="10" maxlength="10" pattern="[0-9]{10}"
           style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
         <label for="dob" style="color:grey; font-size:11px;">Date of Birth</label><br>
-        <input type="text" id="dob" name="dob"
+        <input type="date" id="dob" name="dob"
           style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
           <div style="margin-top: 2rem;">
           <input type = "submit" name ="actionBtn" value="Back" style="background-color: white; color:#931a46 ;font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
-        <input type = "submit" name ="actionBtn" value="Proceed" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
+        <input type = "submit" name ="actionBtn" value="Proceed"  onclick="return validateForm()" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
           </div>
         <p>Already have an account? <a
             style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"

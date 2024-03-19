@@ -38,6 +38,26 @@
         align-items: center !important;
       }
     </style>
+    <script>
+      function validateForm() {
+        var password = document.getElementById("password").value;
+        var confirm_password = document.getElementById("confirm_password").value;
+  
+        if (password && confirm_password) {
+          if (password !== confirm_password) {
+            alert("Passwords do not match");
+            return false; // Prevent form submission
+          }
+          else {
+            return true; // Allow form submission
+          }
+        }
+        else {
+          alert("Please fill both the fields");
+          return false;
+        }
+      }
+    </script>
   </head>
 
 <body>
@@ -60,7 +80,7 @@
         <label for="confirm_password" style="color:grey; font-size:11px;">Confirm Password</label><br>
         <input type="text" id="confirm_password" name="confirm_password" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
         <input type = "submit" name ="actionBtn" value="Back" style="background-color: white; color:#931a46; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
-        <input type = "submit" name ="actionBtn" value="Proceed" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
+        <input type = "submit" name ="actionBtn" value="Proceed" onclick="return validateForm()" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
         <p>Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="/login">Sign In</a></p>
       </form> 
   </div>
