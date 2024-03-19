@@ -1,43 +1,72 @@
-<!-- {% extends "base.html" %} -->
-
 <!DOCTYPE html>
 
-<!-- {% block content %} --> 
+
 
 <html>
-  <head>
-    <style>
-        /* Define styles for different sections */
-        .section1 {
-            width: 45%;
-            height: 750px; /* Set the width of the first section */
-            background-color: #931a46; /* Set the background color of the first section */
-            float: left; /* Float the element to the left to make it appear horizontally */
-        }
-        
-        /* Clearfix to clear floats */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-    </style>
-  </head>
 
-  <body>
-  <div class="section1">
-    <h1 style="transform: translate(875px, 100px)">Online Banking Services</h1>
-    <p style="transform: translate(1000px, 115px); color:grey">login into your account</p>
-    <form style="transform: translate(875px, 135px)">
-        <label for="fname" style="color:grey; font-size:11px;">Enter your email address</label><br>
-        <input type="text" id="eaddress" name="eaddress" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-        <label for="lname" style="color:grey; font-size:11px;">Enter your password</label><br>
-        <input type="text" id="pword" name="pword" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-        <input type="submit" value="login" style="padding: 1px 153px; background-color:#931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;">
-        <p style="transform: translate(58px, 30px)">Don’t have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="signup1.html">Sign Up</a></p>
-      </form> 
+<head>
+  <style>
+    .container {
+      margin: 0;
+    }
+
+    .left {
+      width: 40% !important;
+      float: left !important;
+      margin-top: 0 !important;
+      background-color: #97144D !important;
+      height: 100vh !important;
+    }
+
+    .right {
+      width: 60% !important;
+      float: right !important;
+      margin-top: 0 !important;
+      background-color: #ffffff !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      flex-direction: column !important;
+    }
+
+    .alignAccordion {
+      display: flex;
+    }
+
+    .alignSignUps {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+    </div>
+    <div class="right alignSignUps ">
+      <h1>Online Banking Services</h1>
+      <p style="color:grey">login into your account</p>
+      <form method="POST" style="width:45%">
+        {% csrf_token %}
+        <label for="email" style="color:grey; font-size:11px;">Enter your email address</label><br>
+        <input type="text" id="email" name="email"
+          style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
+        <label for="password" style="color:grey; font-size:11px;">Enter your password</label><br>
+        <input type="text" id="password" name="password"
+          style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+        {% if error_message %}
+        <p style="color:red"> {{error_message}}</p>
+        {% endif %}
+        <input type="submit" value="login"
+          style="padding: 1px 153px; background-color:#931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;">
+        <p>Don’t have an account? <a
+            style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"
+            href="/signup1">Sign Up</a></p>
+      </form>
+    </div>
   </div>
-  </body>
+</body>
+
 </html>
-      <!--style="padding: 1px 80px;-->
-<!-- {% endblock content %} -->
