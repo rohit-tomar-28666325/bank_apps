@@ -28,8 +28,6 @@ def signup3(request):
 def signup4(request):
     return render(request, 'signup4.html')
 
-def otp(request):
-    return render(request, 'otp.html')
-    
+
 
 
