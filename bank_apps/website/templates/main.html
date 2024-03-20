@@ -127,14 +127,20 @@
                 </div>
             </div>
             <div class="vertical-menu menu">
-                <a href="#">Log out</a>
-                <a href="#">Help</a>
+                <div class="itemNav" onclick="showContent('logoutOption')" id="logoutOption" style="padding-right: 3.5rem;">
+                    <img src="{% static 'img/logout.png' %}" alt="image">
+                    <p>Log out</p>
+                </div>
+                <div class="itemNav" onclick="showContent('helpOption')" id="helpOption" style="padding-right: 4.9rem;">
+                    <img src="{% static 'img/help.png' %}" alt="image">
+                    <p>Help</p>
+                </div>
             </div>
         </div>
         <div class="right">
             <div id="dashboardOption-content" class="content" style="display: none;">
                 {% block dashboard %}
-                {% include "dashboard.html" %}
+                {% include "dashboard.html" with username=username %}
                 {% endblock %}
 
             </div>

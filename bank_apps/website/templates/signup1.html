@@ -1,48 +1,128 @@
-<!-- {% extends "base.html" %} -->
-
-<!-- {% block content %} -->
-<!DOCTYPE html>
-
 <html>
-  <head>
-    <style>
-        /* Define styles for different sections */
-        .section1 {
-            width: 45%;
-            height: 750px; /* Set the width of the first section */
-            background-color: #931a46; /* Set the background color of the first section */
-            float: left; /* Float the element to the left to make it appear horizontally */
-        }
-        
-        /* Clearfix to clear floats */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-    </style>
-  </head>
+
+<head>
+  <style>
+    .container {
+      margin: 0;
+    }
+
+    .left {
+      width: 40% !important;
+      float: left !important;
+      margin-top: 0 !important;
+      background-color: #97144d !important;
+      height: 100vh !important;
+    }
+
+    .right {
+      width: 60% !important;
+      float: right !important;
+      margin-top: 0 !important;
+      background-color: #ffffff !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      flex-direction: column !important;
+    }
+
+    .alignAccordion {
+      display: flex;
+    }
+
+    .alignSignUps {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+  </style>
+  <script>
+    function validateForm() {
+      var first_name = document.getElementById("first_name").value;
+      var middle_name = document.getElementById("middle_name").value;
+      var last_name = document.getElementById("last_name").value;
+      if (first_name && middle_name && last_name) {
+        return true;
+      } else {
+        alert("Please fill all the fields");
+        return false;
+      }
+    }
+  </script>
+</head>
 
 <body>
-  <div class="section1">
-    <h1 style="transform: translate(875px, 100px)">Online Banking Services</h1>
-    <p style="transform: translate(1000px, 115px); color:grey">login into your account</p>
-    <form action="/action_page.php" style="transform: translate(875px, 135px)">
-        <hr width="60px" color="#931a46" style="transform: translate(-250px, 5px)"/>
-        <hr width="60px" color="grey" style="transform: translate(-150px, -4.5px)"/>
-        <hr width="60px" color="grey" style="transform: translate(-50px, -14px)"/>
-        <hr width="60px" color="grey" style="transform: translate(50px, -23.5px)"/>
-        <label for="title" style="color:grey;">Title</label><br>
-        <input type="text" id="title" name="title" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-        <label for="fname" style="color:grey;">First name</label><br>
-        <input type="text" id="fname" name="fname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-        <label type="text" id="mname" name="mname" style="color:grey; font-size:11px;">Middle name<label type="text" id="lname" name="lname" style="color:grey; font-size:11px;"><span style="display:inline-block; width: 125px;"></span>Last name</label></label><br>
-        <input type="text" id="mname" name="mname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><span style="display:inline-block; width: 2px;"></span><input type="text" id="lname" name="lname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-        <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="signup2.html">Proceed</a>
-        <p style="transform: translate(58px, 30px)">Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="login.html">Sign In</a></p>
-      </form> 
+  <div class="container">
+    <div class="left"></div>
+    <div class="right alignSignUps">
+      <h1>Online Banking Services</h1>
+      <p style="color: grey">login into your account</p>
+      <form method="POST" style="width: 45%">
+        {% csrf_token %}
+        <div class="alignAccordion">
+          <hr width="60px" color="#931a46" />
+          <hr width="60px" color="grey" />
+          <hr width="60px" color="grey" />
+          <hr width="60px" color="grey" />
+        </div>
+        <label for="title" style="color: grey">Title</label><br />
+        <select id="title" name="title" style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            ">
+          <option value="Mr">Mr</option>
+          <option value="Miss">Miss</option>
+          <option value="Mrs">Mrs</option>
+          <!-- Add more options as needed -->
+        </select><br />
+        <label for="first_name" style="color: grey">First name</label><br />
+        <input type="text" id="first_name" name="first_name" style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            " /><br /><br />
+        <label for="middle_name" style="color: grey; font-size: 11px">Middle name
+          <label for="last_name" style="color: grey; font-size: 11px"><span style="display: inline-block; width: 125px">
+            </span>Last
+            name</label></label><br />
+        <input type="text" id="middle_name" name="middle_name" style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            " /><span style="display: inline-block; width: 2px"></span><input type="text" id="last_name"
+          name="last_name" style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            " /><br />
+        <div style="margin-top: 2rem">
+          <input type="submit" name="actionBtn" value="Proceed" onclick="return validateForm()" style="
+                background-color: #931a46;
+                color: white;
+                font-size: 11px;
+                border: 2px solid grey;
+                border-radius: 7px;
+                padding: 5px;
+              " />
+        </div>
+        <p>
+          Already have an account?
+          <a style="
+                background-color: #931a46;
+                color: white;
+                font-size: 11px;
+                border: 2px solid grey;
+                border-radius: 7px;
+                padding: 5px;
+              " href="/login">Sign In</a>
+        </p>
+      </form>
     </div>
+  </div>
 </body>
+
 </html>
-      <!--style="padding: 1px 80px;-->
-<!-- {% endblock content %} -->

@@ -1,49 +1,92 @@
-<!-- {% extends "base.html" %} -->
 
-<!-- {% block content %} -->
 
 <!DOCTYPE html>
 
 <html>
   <head>
     <style>
-        /* Define styles for different sections */
-        .section1 {
-            width: 45%;
-            height: 750px; /* Set the width of the first section */
-            background-color: #931a46; /* Set the background color of the first section */
-            float: left; /* Float the element to the left to make it appear horizontally */
-        }
-        
-        /* Clearfix to clear floats */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
+      .container {
+        margin: 0;
+      }
+  
+      .left {
+        width: 40% !important;
+        float: left !important;
+        margin-top: 0 !important;
+        background-color: #97144D !important;
+        height: 100vh !important;
+      }
+  
+      .right {
+        width: 60% !important;
+        float: right !important;
+        margin-top: 0 !important;
+        background-color: #ffffff !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: column !important;
+      }
+  
+      .alignAccordion {
+        display: flex;
+      }
+  
+      .alignSignUps {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+      }
     </style>
+    <script>
+      function validateForm() {
+        var password = document.getElementById("password").value;
+        var confirm_password = document.getElementById("confirm_password").value;
+  
+        if (password && confirm_password) {
+          if (password !== confirm_password) {
+            alert("Passwords do not match");
+            return false; // Prevent form submission
+          }
+          else {
+            return true; // Allow form submission
+          }
+        }
+        else {
+          alert("Please fill both the fields");
+          return false;
+        }
+      }
+    </script>
   </head>
 
 <body>
-  <div class="section1">
-    <h1 style="transform: translate(875px, 100px)">Online Banking Services</h1>
-    <p style="transform: translate(1000px, 115px); color:grey">login into your account</p>
-    <form action="/action_page.php" style="transform: translate(875px, 135px)">
-        <hr width="60px" color="grey" style="transform: translate(-250px, 5px)"/>
-        <hr width="60px" color="grey" style="transform: translate(-150px, -5.5px)"/>
-        <hr width="60px" color="grey" style="transform: translate(-50px, -15.5px)"/>
-        <hr width="60px" color="#931a46" style="transform: translate(50px, -25.5px)"/>
-        <label for="title" style="color:grey; font-size:11px;">Password</label><br>
-        <input type="text" id="title" name="title" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-        <label for="fname" style="color:grey; font-size:11px;">Confirm Password</label><br>
-        <input type="text" id="fname" name="fname" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-        <a style="background-color: white; color:#931a46; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="signup3.html">Back</a>
-        <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="otp.html">Proceed</a>
-        <p style="transform: translate(58px, 30px)">Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="login.html">Sign In</a></p>
+  <div class="container">
+    <div class="left">
+    </div>
+    <div class="right alignSignUps ">
+        <h1>Online Banking Services</h1>
+        <p style="color:grey">login into your account</p>
+        <form method="POST"  style="width:45%">
+          {% csrf_token %}
+          <div class="alignAccordion">
+            <hr width="60px" color="grey" />
+            <hr width="60px" color="grey" />
+            <hr width="60px" color="grey" />
+            <hr width="60px" color="#931a46" />
+          </div>
+        <label for="password" style="color:grey; font-size:11px;">Password</label><br>
+        <input type="text" id="password" name="password" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
+        <label for="confirm_password" style="color:grey; font-size:11px;">Confirm Password</label><br>
+        <input type="text" id="confirm_password" name="confirm_password" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+        <input type = "submit" name ="actionBtn" value="Back" style="background-color: white; color:#931a46; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
+        <input type = "submit" name ="actionBtn" value="Proceed" onclick="return validateForm()" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
+        <p>Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="/login">Sign In</a></p>
       </form> 
   </div>
+</div>
+</div>
 </body>
 
 </html>
 
-<!-- {% endblock content %} -->
