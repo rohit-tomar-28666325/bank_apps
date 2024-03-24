@@ -1,1 +1,75 @@
-<h2>Transaction HTML</h2>
+<html>
+
+<head>
+    <style>
+        .container {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+        }
+
+        .filters {
+            flex-grow: 1;
+            display: flex;
+            justify-content: inherit;
+        }
+
+        .filters>div {
+            background-color: aqua;
+            padding: 0.3rem;
+            min-width: 4rem;
+            text-align: center;
+        }
+
+        .downloadBtn {
+            display: flex;
+            flex-grow: 4;
+            justify-content: flex-end;
+        }
+
+        .alignFilters {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Transactions</h2>
+    <div class="container">
+        <div class="row alignFilters">
+            <div class="filters">
+                <div>
+                    <div>Date</div>
+                    <input type="date" id="date-filter"/>
+                </div>
+                <div>
+                    <div>Amount</div>
+                    <input type="text" id="amount-filter"/>
+                </div>
+                <div>
+                    <div>Transaction Type</div>
+                    <input type="text" id="type-filter" />
+                </div>
+            </div>
+            <div class="downloadBtn">
+                <button> Download </button>
+            </div>
+        </div>
+    </div>
+    <div>
+        {% block TransactionTable %}
+        {% with tableData=tableData %}
+        {% include "table.html" %}
+        {% endwith %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>
