@@ -41,6 +41,7 @@
 
 <body>
     <h2>Transactions</h2>
+    {% if tableData %}
     <div class="container">
         <div class="row alignFilters">
             <div class="filters">
@@ -56,6 +57,9 @@
                     <div>Transaction Type</div>
                     <input type="text" id="type-filter" />
                 </div>
+                <div>
+                    <button>Filter</button>
+                </div>
             </div>
             <div class="downloadBtn">
                 <button> Download </button>
@@ -69,7 +73,9 @@
         {% endwith %}
         {% endblock %}
     </div>
-
+    {% else %}
+    <h3> No Transactions Done yet</h3>
+    {% endif %}
 </body>
 
 </html>

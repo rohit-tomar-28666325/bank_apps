@@ -23,15 +23,15 @@
     tr:first-child {
       background-color: #dddddd !important;
     }
-    
-   .statusChip {
-    color:#02B15A;
-    background-color: #02B15A33;
-    text-align: center;
-    width: 70px;
-    border-radius: 8px;
-    font-size: smaller;
-   }
+
+    .statusChip {
+      color: #02B15A;
+      background-color: #02B15A33;
+      text-align: center;
+      width: 70px;
+      border-radius: 8px;
+      font-size: smaller;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
@@ -41,13 +41,13 @@
       var buttons = document.querySelectorAll('.pdf-button');
       buttons.forEach(function (button) {
         button.addEventListener('click', function () {
-            var account = button.getAttribute('data-acc');
-            var type = button.getAttribute('data-trans');
-            var date = button.getAttribute('data-date');
-            var amount = button.getAttribute('data-amount');
-            // Call your function passing the data
-            generateAndDownloadPdf(account, type, amount, date);
-      
+          var account = button.getAttribute('data-acc');
+          var type = button.getAttribute('data-trans');
+          var date = button.getAttribute('data-date');
+          var amount = button.getAttribute('data-amount');
+          // Call your function passing the data
+          generateAndDownloadPdf(account, type, amount, date);
+
         });
       });
     });
@@ -87,6 +87,7 @@
 </head>
 
 <body>
+  {% if tableData %}
   <table>
     <tr>
       <th>Name</th>
@@ -96,18 +97,26 @@
       <th>Status</th>
       <th></th>
     </tr>
+
     {% for obj in tableData %}
     <tr>
       <td>{{obj.account_number_and_name}}</td>
       <td>{{obj.transType}}</td>
       <td>{{obj.date}}</td>
       <td>£{{obj.amount}}</td>
-      <td> <div class="statusChip">Success</div> </td>
+      <td>
+        <div class="statusChip">Success</div>
+      </td>
       <td><button class="pdf-button" data-acc="{{obj.account_number_and_name}}" data-trans="{{obj.transType}}"
           data-amount="{{obj.amount}}" data-date="{{obj.date}}">Download Receipt</button></td>
     </tr>
     {% endfor %}
+
   </table>
+  {% else %}
+    <h3>No Transactions Done yet</h3>
+ 
+  {% endif %}
 
 </body>
 
