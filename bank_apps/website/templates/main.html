@@ -80,10 +80,7 @@
         }
     </style>
     <script>
-        console.log("call1")
-
         function showContent(option) {
-            console.log("call2")
             // Hide all content divs
             document.querySelectorAll('.content').forEach(function (el) {
                 el.style.display = 'none';
@@ -97,26 +94,6 @@
             document.getElementById(option + '-content').style.display = 'block';
             document.getElementById(option + '-nav').classList.add('active');
         }
-
-        // document.getElementById('logoutOption').addEventListener('click', function(){
-        //     console.log("call3")
-        //     // Clear session
-        //     sessionStorage.clear(); // or localStorage.clear() if you're using localStorage
-
-        //     // Redirect to desired URL
-        //     window.location.href = '/login/'; // Replace '/redirect_url/' with your desired URL
-        // });
-
-        // function logOut(option) {
-        //     console.log("call41")
-        //     // showContent(option)
-        //     // console.log("call4")
-        //     // // Clear session
-        //     // sessionStorage.clear(); // or localStorage.clear() if you're using localStorage
-
-        //     // // Redirect to desired URL
-        //     // window.location.href = '/login/'
-        // }
 
     </script>
 </head>
