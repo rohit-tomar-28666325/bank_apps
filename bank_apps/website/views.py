@@ -4,8 +4,10 @@ import pyotp
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.core.mail import send_mail
-from website.forms import CustomersForm  
-from website.models import Customers  
+from website.forms import CustomersForm, TransactionForm 
+from website.models import Customers, Transaction
+from django.db.models import Sum
+import datetime
 
 
 def home(request):
@@ -24,6 +26,7 @@ def login(request):
                 username = Customers.objects.filter(email=request.POST['email'])[0].last_name
                 send_otp(request, emailID)
                 request.session['username'] = username
+                request.session['email'] = emailID
                 return redirect('otp')
             else:
                 error_message = 'Invalid password. Please enter correct password'
@@ -34,7 +37,38 @@ def login(request):
     return render(request, 'login.html', {"error_message": error_message})
     
 def main(request):
-    return render(request, 'main.html',{'username': request.session['username']})
+    isSuccess = False
+    if request.method == "POST":  
+        print('block entered123', request.session['email'])
+        form = TransactionForm(request.POST)  
+        if form.is_valid():  
+            print('block entered')
+            try: 
+                print('try block entered')
+                form.instance.email = request.session['email'] 
+                form.instance.date = datetime.datetime.now().strftime("%d/%m/%Y")
+                form.instance.status = "Success" 
+                form.save()  
+                isSuccess = True;
+                return redirect('main')
+
+            except:  
+                   pass
+    else:  
+        form = TransactionForm()  
+
+    tableData = Transaction.objects.all().order_by('-pk') 
+    loggedInUserData = Transaction.objects.filter(email=request.session['email'])
+    totalIncome = Transaction.objects.filter(transType="deposit").aggregate(total_amount=Sum('amount'))['total_amount']
+    totalOutcome = Transaction.objects.exclude(transType="deposit").aggregate(total_amount=Sum('amount'))['total_amount']
+    if(totalIncome == None):
+        totalIncome = 0
+    if(totalOutcome == None):
+        totalOutcome = 0
+    totalBalance = totalIncome - totalOutcome
+
+    return render(request, 'main.html',{'username': request.session['username'], 'tableData' : tableData, 'totalIncome' : totalIncome,
+    "totalOutcome" : totalOutcome, "totalBalance" : totalBalance, "isSuccess": isSuccess})
 
 def signup1(request):
     if request.method =="POST" :
