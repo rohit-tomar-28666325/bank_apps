@@ -47,8 +47,25 @@
         <p style="color:grey">Card Details</p>
         <form method="POST" style="width:45%">
             {% csrf_token %}
-
-
+            <label for="card_number" style="color:grey; font-size:11px;">Card Number</label><br>
+            <input type="text" id="card_number" name="card_number" minlength="10" maxlength="10" pattern="[0-9]{10}"
+            style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
+            <label for="pin_number" style="color:grey; font-size:11px;">Pin Number</label><br>
+            <input type="text" id="pin_number" name="pin_number" minlength="4" maxlength="4" pattern="[0-9]{10}"
+            style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+            <label for="security_code" style="color:grey; font-size:11px;">Security Code</label><br>
+            <input type="text" id="security_code" name="security_code" minlength="3" maxlength="3" pattern="[0-9]{10}"
+            style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+            <div style="margin-top: 2rem">
+              <input type="submit" name="actionBtn" value="Proceed" onclick="return validateForm()" style="
+                    background-color: #931a46;
+                    color: white;
+                    font-size: 11px;
+                    border: 2px solid grey;
+                    border-radius: 7px;
+                    padding: 5px;
+                  " />
+            </div>
         </form>
     </div>
 </body>

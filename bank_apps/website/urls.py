@@ -13,6 +13,8 @@ urlpatterns = [
     path('signup4/', views.signup4, name = 'signup4'),
     path('otp/', views.otp, name = 'otp'),
     path('main/', views.main, name = 'main'),
+    path('card/', views.card, name = 'card'),
+    path('settings/', views.setting, name = 'settings'),
 ]
 
 if settings.DEBUG:

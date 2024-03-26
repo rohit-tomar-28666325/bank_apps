@@ -77,6 +77,23 @@ def main(request):
     return render(request, 'main.html',{'username': request.session['username'], 'tableData' : tableData, 'totalIncome' : totalIncome,
     "totalOutcome" : totalOutcome, "totalBalance" : totalBalance, "isSuccess": isSuccess})
 
+def card(request):
+    if request.method =="POST" :
+        request.session['tempData0'] = request.POST
+        if request.POST['actionBtn'] == 'Proceed':
+            return redirect('dashboard')
+
+    return render(request, 'card.html')
+
+
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
+def setting(request):
+    return render(request, 'settings.html')
+
+
+
 def signup1(request):
     if request.method =="POST" :
          request.session['tempData1'] = request.POST
