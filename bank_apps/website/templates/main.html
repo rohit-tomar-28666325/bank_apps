@@ -8,15 +8,15 @@
 <head>
     <style>
         .container {
-            margin: 0;
+            margin: -1rem;
+            overflow: hidden;
         }
-
         .right {
             width: 85%;
             float: right;
             margin-top: 0;
             background-color: grey;
-            height: calc(100vh - 4rem);
+            height: calc(100vh - 3rem);
         }
 
         .left {
@@ -55,9 +55,6 @@
             background-color: #97144d;
             color: #ffffff
         }
-    }
-
-        .vertical-menu {
             div:active {
             background-color: #97144d;
             color: #ffffff
@@ -73,8 +70,8 @@
         }
 
         .active {
-            background-color: #97144d;
-            color: #ffffff
+            background-color: #97144d !important;
+            color: #ffffff !important;
         }
 
         .menu {
@@ -89,8 +86,18 @@
                 el.style.display = 'none';
             });
 
+            document.querySelectorAll('.itemNav').forEach(function (el) {
+                el.classList.remove('active');
+            });
+
             // Show the content div corresponding to the clicked menu item
             document.getElementById(option + '-content').style.display = 'block';
+            document.getElementById(option + '-nav').classList.add('active');
+        }
+
+        function logOut() {
+            sessionStorage.clear();
+            window.location.href = '/login/'
         }
 
     </script>
@@ -101,52 +108,52 @@
         <div class="row header"> </div>
         <div class="left">
             <div class="vertical-menu" id="menuNav">
-                <div class="itemNav active" onclick="showContent('dashboardOption')" id="dashboardOption">
+                <div class="itemNav active" onclick="showContent('dashboardOption')" id="dashboardOption-nav">
                     <img src="{% static 'img/dashboard.png' %}" alt="image">
                     <p>Dashboard</p>
                 </div>
-                <div class="itemNav" onclick="showContent('transactionOption')" id="transactionOption">
+                <div class="itemNav" onclick="showContent('transactionOption')" id="transactionOption-nav">
                     <img src="{% static 'img/transaction.png' %}" alt="image">
                     <p>Transaction</p>
                 </div>
-                <div class="itemNav" onclick="showContent('cardOption')" id="cardOption" style="padding-right: 4.5rem;">
+                <div class="itemNav" onclick="showContent('cardOption')" id="cardOption-nav" style="padding-right: 4.5rem;">
                     <img src="{% static 'img/card.png' %}" alt="image">
                     <p>Card</p>
                 </div>
-                <div class="itemNav" onclick="showContent('loanOption')" id="loanOption" style="padding-right: 4.5rem;">
+                <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav" style="padding-right: 4.5rem;">
                     <img src="{% static 'img/loan.png' %}" alt="image">
                     <p>Loan</p>
                 </div>
-                <div class="itemNav" onclick="showContent('investmentOption')" id="investmentOption">
+                <div class="itemNav" onclick="showContent('investmentOption')" id="investmentOption-nav">
                     <img src="{% static 'img/investment.png' %}" alt="image">
                     <p>Investment</p>
                 </div>
-                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption" style="padding-right: 3.5rem;">
+                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav" style="padding-right: 3.5rem;">
                     <img src="{% static 'img/setting.png' %}" alt="image">
                     <p>Settings</p>
                 </div>
             </div>
             <div class="vertical-menu menu">
-                <div class="itemNav" onclick="showContent('logoutOption')" id="logoutOption" style="padding-right: 3.5rem;">
+                <div class="itemNav" onclick="logOut()" id="logoutOption-nav" style="padding-right: 3.5rem;">
                     <img src="{% static 'img/logout.png' %}" alt="image">
                     <p>Log out</p>
                 </div>
-                <div class="itemNav" onclick="showContent('helpOption')" id="helpOption" style="padding-right: 4.9rem;">
+                <div class="itemNav" onclick="showContent('helpOption')" id="helpOption-nav" style="padding-right: 4.9rem;">
                     <img src="{% static 'img/help.png' %}" alt="image">
                     <p>Help</p>
                 </div>
             </div>
         </div>
         <div class="right">
-            <div id="dashboardOption-content" class="content" style="display: none;">
+            <div id="dashboardOption-content" class="content" style="display: block;">
                 {% block dashboard %}
-                {% include "dashboard.html" with username=username %}
+                {% include "dashboard.html" with username=username tableData=tableData totalBalance=totalBalance totalIncome=totalIncome totalOutcome=totalOutcome %}
                 {% endblock %}
 
             </div>
-            <div id="transactionOption-content" class="content" style="display: none;">
+            <div id="transactionOption-content" class="content" style="display: none; padding: 1rem;">
                 {% block transaction %}
-                {% include "transaction.html" %}
+                {% include "transaction.html" with tableData=tableData %}
                 {% endblock %}
 
             </div>

@@ -4,7 +4,7 @@ class Customers(models.Model):
     first_name = models.CharField(max_length=100, blank=True, default='')  
     middle_name = models.CharField(max_length=100, blank=True, default='') 
     last_name = models.CharField(max_length=100, blank=True, default='') 
-    email = models.CharField(max_length=100, blank=True, default='') 
+    email = models.CharField(max_length=150, blank=True, default='') 
     phone_number= models.CharField(max_length=10, blank=True, default='')
     dob =models.CharField(max_length=15, blank=True, default='') 
     address = models.CharField(max_length=150, blank=True, default='')
@@ -22,3 +22,18 @@ class Customers(models.Model):
 
     class Meta:  
         db_table = "customers"  
+
+
+
+class Transaction(models.Model): 
+    account_number_and_name = models.CharField(max_length=150, blank=True, default='')
+    transType = models.CharField(max_length=15, blank=True, default='')
+    amount = models.CharField(max_length=15, blank=True, default='')
+    balance_after = models.CharField(max_length=15, blank=True, default='')
+    balance_before = models.CharField(max_length=15, blank=True, default='')
+    summary = models.CharField(max_length=250, blank=True, default='')
+    date = models.CharField(max_length=15, blank=True, default='')
+    email = models.CharField(max_length=150, blank=True, default='')
+    class Meta:  
+        db_table = "transaction"  
+  

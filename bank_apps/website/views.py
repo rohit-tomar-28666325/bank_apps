@@ -1,11 +1,15 @@
 from django.shortcuts import render, HttpResponse, redirect
 from website.forms import CustomersForm 
 import pyotp
-from datetime import datetime, timedelta
 from django.conf import settings
 from django.core.mail import send_mail
-from website.forms import CustomersForm  
-from website.models import Customers  
+from website.forms import CustomersForm, TransactionForm 
+from website.models import Customers, Transaction
+from django.db.models import Sum
+from django.db import OperationalError
+from datetime import date, datetime, time, timedelta
+from backports.datetime_fromisoformat import MonkeyPatch
+MonkeyPatch.patch_fromisoformat()
 
 
 def home(request):
@@ -24,6 +28,7 @@ def login(request):
                 username = Customers.objects.filter(email=request.POST['email'])[0].last_name
                 send_otp(request, emailID)
                 request.session['username'] = username
+                request.session['email'] = emailID
                 return redirect('otp')
             else:
                 error_message = 'Invalid password. Please enter correct password'
@@ -34,7 +39,43 @@ def login(request):
     return render(request, 'login.html', {"error_message": error_message})
     
 def main(request):
-    return render(request, 'main.html',{'username': request.session['username']})
+    isSuccess = False
+    if request.method == "POST":  
+        form = TransactionForm(request.POST)  
+        if form.is_valid():  
+            try: 
+                form.instance.email = request.session['email'] 
+                form.instance.date = datetime.now().strftime("%d/%m/%Y")
+                form.instance.status = "Success" 
+                form.save() 
+                print("savedData")
+                isSuccess = True;
+                return redirect('main')
+
+            except:  
+                   pass
+    else:  
+        form = TransactionForm()  
+    
+    try:
+        print("request.session['email']", request.session['email'])
+        tableData = Transaction.objects.filter(email=request.session['email']).order_by('-pk') 
+        totalIncome = Transaction.objects.filter(transType="deposit", email = request.session['email']).aggregate(total_amount=Sum('amount'))['total_amount']
+        totalOutcome = Transaction.objects.filter(email=request.session['email']).exclude(transType="deposit", email = request.session['email']).aggregate(total_amount=Sum('amount'))['total_amount']
+        if(totalIncome == None):
+            totalIncome = 0
+        if(totalOutcome == None):
+            totalOutcome = 0
+        totalBalance = totalIncome - totalOutcome
+    except OperationalError as e:
+        print("except block", e)
+        tableData = [];
+        totalIncome= 0;
+        totalOutcome=0;
+        totalBalance=0;
+
+    return render(request, 'main.html',{'username': request.session['username'], 'tableData' : tableData, 'totalIncome' : totalIncome,
+    "totalOutcome" : totalOutcome, "totalBalance" : totalBalance, "isSuccess": isSuccess})
 
 def signup1(request):
     if request.method =="POST" :
@@ -65,7 +106,8 @@ def signup3(request):
 def signup4(request):
     if request.method == "POST":
         request.session['tempData4'] = request.POST
-   
+        request.session['username'] = dict(request.session['tempData1'].items()).get('last_name')
+        request.session['email'] = dict(request.session['tempData2'].items()).get('email')
         if request.POST['actionBtn'] == 'Proceed':
              send_otp(request, dict(request.session['tempData2'].items()).get('email'))
              return redirect('otp')
@@ -93,6 +135,7 @@ def addNewUserDataToDatabase(request):
                 form.instance.password =dict(request.session['tempData4'].items()).get('password')
                 form.instance.status = "Active"
                 form.save() 
+                 
                 return
             except Exception as e:  
                 pass  
@@ -114,7 +157,7 @@ def otp(request):
     if request.method == 'POST':
         otp = formOTP(request)
         otp_secret_key = request.session['otp_secret_key']
-        otp_valid_until = request.session['otp_valid_date']   
+        otp_valid_until = request.session['otp_valid_date']    
         if otp=="":
             error_message ="Please enter OTP"
         elif request.session['otp'] != otp :
@@ -131,7 +174,6 @@ def otp(request):
                     if request.session['otp'] == formOTP(request) :
                         if request.POST['actionBtn'] == 'Verify Email':
                             addNewUserDataToDatabase(request)
-                            request.session['username'] = dict(request.session['tempData1'].items()).get('last_name')  
                             return redirect('main')                         
                         else:
                             return redirect('signup1')
@@ -152,7 +194,7 @@ def otp(request):
                  pass  
     else:  
         pass      
-    return render(request, 'otp.html',{"error_message" : error_message, "emailID": dict(request.session['tempData2'].items()).get('email')})
+    return render(request, 'otp.html',{"error_message" : error_message, "emailID": request.session['email']})
     
 def send_otp(request, emailID):
     totp = pyotp.TOTP(pyotp.random_base32(), interval = 60)
