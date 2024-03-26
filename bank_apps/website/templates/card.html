@@ -1,1 +1,55 @@
-<h2>Cards HTML</h2>
+<html>
+
+<head>
+  <style>
+    .container {
+      margin: 0;
+    }
+
+    .left {
+      width: 40% !important;
+      float: left !important;
+      margin-top: 0 !important;
+      background-color: #97144d !important;
+      height: 100vh !important;
+    }
+
+    .right {
+      width: 60% !important;
+      float: right !important;
+      margin-top: 0 !important;
+      background-color: #ffffff !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      flex-direction: column !important;
+    }
+  </style>
+  <script>
+    function validateForm() {
+      var card_number = document.getElementById("card_number").value;
+      var pin_number = document.getElementById("pin_number").value;
+      var security_code = document.getElementById("security_code").value;
+      if (card_number && pin_number && security_code) {
+        return true;
+      } else {
+        alert("Please fill all the fields");
+        return false;
+      }
+    }
+  </script>
+</head>
+
+<body>
+    <div class="left"></div>
+    <div class="right">
+        <h1>Debit Card</h1>
+        <p style="color:grey">Card Details</p>
+        <form method="POST" style="width:45%">
+            {% csrf_token %}
+
+
+        </form>
+    </div>
+</body>
+</html>
