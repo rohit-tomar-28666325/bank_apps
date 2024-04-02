@@ -8,9 +8,10 @@
 <head>
     <style>
         .container {
-            margin: -1rem;
+            margin: 0rem;
             overflow: hidden;
         }
+
         .right {
             width: 85%;
             float: right;
@@ -40,26 +41,26 @@
             background-color: #ffffff;
         }
 
-        .vertical-menu 
-        {
+        .vertical-menu {
             div {
-            background-color: #ffffff;
-            color: black;
-            display: block;
-            text-decoration: none;
+                background-color: #ffffff;
+                color: black;
+                display: block;
+                text-decoration: none;
+            }
         }
-    }
 
         .vertical-menu {
             div:hover {
-            background-color: #97144d;
-            color: #ffffff
-        }
+                background-color: #97144d;
+                color: #ffffff
+            }
+
             div:active {
-            background-color: #97144d;
-            color: #ffffff
+                background-color: #97144d;
+                color: #ffffff
+            }
         }
-    }
 
         .itemNav {
             display: flex !important;
@@ -77,6 +78,14 @@
         .menu {
             display: flex;
             flex-direction: column-reverse;
+        }
+        .questions{
+            font-weight: bold;
+        }
+        .quesAns{
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-bottom: 0.5rem;
         }
     </style>
     <script>
@@ -111,7 +120,7 @@
         <div class="row header"> </div>
         <div class="left">
             <div class="vertical-menu" id="menuNav">
-                <div class="itemNav active" onclick="showContent('dashboardOption')" id="dashboardOption-nav">
+                <div class="itemNav" onclick="showContent('dashboardOption')" id="dashboardOption-nav">
                     <img src="{% static 'img/dashboard.png' %}" alt="image">
                     <p>Dashboard</p>
                 </div>
@@ -119,11 +128,13 @@
                     <img src="{% static 'img/transaction.png' %}" alt="image">
                     <p>Transaction</p>
                 </div>
-                <div class="itemNav" onclick="showContent('cardOption')" id="cardOption-nav" style="padding-right: 4.5rem;">
+                <div class="itemNav" onclick="showContent('cardOption')" id="cardOption-nav"
+                    style="padding-right: 4.5rem;">
                     <img src="{% static 'img/card.png' %}" alt="image">
                     <p>Card</p>
                 </div>
-                <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav" style="padding-right: 4.5rem;">
+                <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav"
+                    style="padding-right: 4.5rem;">
                     <img src="{% static 'img/loan.png' %}" alt="image">
                     <p>Loan</p>
                 </div>
@@ -131,7 +142,8 @@
                     <img src="{% static 'img/investment.png' %}" alt="image">
                     <p>Investment</p>
                 </div>
-                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav" style="padding-right: 3.5rem;">
+                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav"
+                    style="padding-right: 3.5rem;">
                     <img src="{% static 'img/setting.png' %}" alt="image">
                     <p>Settings</p>
                 </div>
@@ -141,22 +153,37 @@
                     <img src="{% static 'img/logout.png' %}" alt="image">
                     <p>Log out</p>
                 </div>
-                <div class="itemNav" onclick="showContent('helpOption')" id="helpOption-nav" style="padding-right: 4.9rem;">
+                <div class="itemNav active" onclick="showContent('helpOption')" id="helpOption-nav"
+                    style="padding-right: 4.9rem;">
                     <img src="{% static 'img/help.png' %}" alt="image">
                     <p>Help</p>
                 </div>
             </div>
         </div>
         <div class="right">
-            <div id="dashboardOption-content" class="content" style="display: block;">
-                {% block dashboard %}
-                {% include "dashboard.html" with username=username tableData=tableData totalBalance=totalBalance totalIncome=totalIncome totalOutcome=totalOutcome %}
-                {% endblock %}
-
+            <h2 style="padding-left: 1rem; padding-bottom: 1rem;">Frequenty Asked Questions</h3>
+            <div class="quesAns">
+                <p class="questions">How do I open a new account?</p>
+                <p class="answers">To open a new account, you can visit our nearest branch with the required documents
+                    or apply online through our website.</p>
             </div>
-           
-
-
+            <div class="quesAns">
+                <p class="questions">What documents do I need to open an account?</p>
+                <p class="answers">Typically, you will need a valid ID proof (such as a passport or driver's license), address proof, and proof of income.</p>
+            </div>
+            <div class="quesAns">
+                <p class="questions">How can I check my account balance?</p>
+                <p class="answers">You can check your account balance through our mobile banking app, internet banking portal, ATMs, or by visiting a branch.</p>
+            </div>
+            <div class="quesAns">
+                <p class="questions">What should I do if I lose my debit/credit card?</p>
+                <p class="answers">If you lose your card, please report it immediately by contacting our customer service helpline or through our mobile banking app. We will block your card to prevent any unauthorized transactions and issue you a new one.</p>
+            </div>
+            <div class="quesAns">
+                <p class="questions">How can I transfer funds to another account?</p>
+                <p class="answers">You can transfer funds through our internet banking portal or mobile banking app. Simply add the beneficiary's account details and initiate the transfer.</p>
+            </div>
+            
         </div>
     </div>
 </body>

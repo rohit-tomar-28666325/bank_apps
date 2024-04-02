@@ -10,7 +10,9 @@ from django.db import OperationalError
 from datetime import date, datetime, time, timedelta
 from backports.datetime_fromisoformat import MonkeyPatch
 MonkeyPatch.patch_fromisoformat()
-
+from django.db.models import Q
+from django.core.serializers import serialize
+import time
 
 def home(request):
     return render(request, 'login.html', {'title': 'home'})
@@ -23,7 +25,7 @@ def login(request):
     if request.method == 'POST':
         emailID = request.POST['email']
         password = request.POST['password']
-        if Customers.objects.filter(email=request.POST['email']).exists():
+        if Customers.objects.filter(email=request.POST['email']).exists() and Customers.objects.filter(email=request.POST['email'])[0].status == "Active":
             if Customers.objects.filter(email=request.POST['email'])[0].password == password:
                 username = Customers.objects.filter(email=request.POST['email'])[0].last_name
                 send_otp(request, emailID)
@@ -48,7 +50,6 @@ def main(request):
                 form.instance.date = datetime.now().strftime("%d/%m/%Y")
                 form.instance.status = "Success" 
                 form.save() 
-                print("savedData")
                 isSuccess = True;
                 return redirect('main')
 
@@ -58,7 +59,6 @@ def main(request):
         form = TransactionForm()  
     
     try:
-        print("request.session['email']", request.session['email'])
         tableData = Transaction.objects.filter(email=request.session['email']).order_by('-pk') 
         totalIncome = Transaction.objects.filter(transType="deposit", email = request.session['email']).aggregate(total_amount=Sum('amount'))['total_amount']
         totalOutcome = Transaction.objects.filter(email=request.session['email']).exclude(transType="deposit", email = request.session['email']).aggregate(total_amount=Sum('amount'))['total_amount']
@@ -68,7 +68,6 @@ def main(request):
             totalOutcome = 0
         totalBalance = totalIncome - totalOutcome
     except OperationalError as e:
-        print("except block", e)
         tableData = [];
         totalIncome= 0;
         totalOutcome=0;
@@ -86,13 +85,93 @@ def card(request):
     return render(request, 'card.html')
 
 
-def dashboard(request):
-    return render(request, 'dashboard.html')
-
 def setting(request):
-    return render(request, 'settings.html')
+    editmessage=""
+    passwordmessage=""
+    closemessage=""
+    if request.method=="POST":
+        if request.POST['actionBtn'] == 'Submit':
+            user = Customers.objects.filter(email=request.session['email'])  
+            for obj in user:
+                if request.POST['first_name']:
+                    obj.first_name = request.POST['first_name']
+                if request.POST['last_name']:
+                    obj.last_name = request.POST['last_name']
+                if request.POST['phone_number']:
+                    obj.phone_number = request.POST['phone_number']
+                obj.save()
+                editmessage = "Saved Successfully"
+        if request.POST['actionBtn'] == 'Change Password':
+            user = Customers.objects.filter(email=request.session['email'])
+            for obj in user:
+                if request.POST['password']:
+                    obj.password = request.POST['password']  
+                obj.save()
+                passwordmessage = "Saved Successfully"
+        if request.POST['actionBtn'] == 'Close Account':
+            user = Customers.objects.filter(email=request.session['email'])
+            for obj in user:
+                obj.status = "Close" 
+                obj.save()
+            closemessage = "Closed Successfully"
+            time.sleep(5)
+            return redirect('login')
+                
+    return render(request, 'settings.html',{"passwordmessage":passwordmessage,"editmessage":editmessage, "closemessage": closemessage})
 
+def investment(request):
+    return render(request, 'investment.html')
 
+def loan(request):
+    return render(request, 'loan.html')
+
+def help(request):
+    return render(request, 'help.html')
+
+def filterTransaction(date="", amount="", transType="", email=""):
+    if date:
+        date = datetime.strptime(date, "%Y-%m-%d").strftime("%d/%m/%Y")  
+    if(date and not amount and  transType=="None"):
+        tableDataFilter = Transaction.objects.filter(Q(date=date) & Q(email=email)).order_by('-pk') 
+    elif (transType != "None" and not amount and not date ):
+        tableDataFilter = Transaction.objects.filter(Q(transType=transType) & Q(email=email)).order_by('-pk')
+    elif(amount and not date and transType=="None"):
+        tableDataFilter = Transaction.objects.filter(Q(amount=amount) & Q(email=email)).order_by('-pk') 
+    elif(date and amount and transType =="None"):
+        tableDataFilter = Transaction.objects.filter(Q(amount=amount) & Q(date=date) & Q(email=email)).order_by('-pk') 
+    elif(transType != "None" and amount and not date):
+        tableDataFilter = Transaction.objects.filter(Q(amount=amount) , Q(transType=transType) ,Q(email=email)).order_by('-pk') 
+    elif(transType != "None" and date and not amount):
+        tableDataFilter = Transaction.objects.filter(Q(date=date) & Q(transType=transType) & Q(email=email)).order_by('-pk') 
+    else :
+        tableDataFilter = Transaction.objects.filter(email=email).order_by('-pk') 
+    return tableDataFilter
+
+def transaction(request):
+    date=''
+    amount=''
+    transType='None'
+    try:
+        if request.method =="POST":
+            if request.POST['actionBtn'] == "Filter":
+                date=request.POST['date']
+                amount=request.POST['amount']
+                transType=request.POST['transType']
+                if(date or amount or transType):
+                    tableData = filterTransaction(date, amount, transType, request.session['email'])
+            if request.POST['actionBtn'] == "Clear Filter":
+                date=''
+                amount = ''
+                transType = 'None'
+                tableData = Transaction.objects.filter(email=request.session['email']).order_by('-pk')
+                
+        else:
+            tableData = Transaction.objects.filter(email=request.session['email']).order_by('-pk') 
+        totalUnFilteredDataCount =  Transaction.objects.filter(email=request.session['email']).order_by('-pk').count() 
+
+    except OperationalError as e:
+        tableData = [];
+    return render(request, 'transaction.html', {"tableData" : tableData, "date": date, "amount":amount, "transType":transType, "totalUnFilteredDataCount":totalUnFilteredDataCount, "transactionData": serialize('json', tableData)})
 
 def signup1(request):
     if request.method =="POST" :

@@ -15,6 +15,10 @@ urlpatterns = [
     path('main/', views.main, name = 'main'),
     path('card/', views.card, name = 'card'),
     path('settings/', views.setting, name = 'settings'),
+    path('loan/', views.loan, name = 'loan'),
+    path('help/', views.help, name = 'help'),
+    path('investment/', views.investment, name = 'investment'),
+    path('transaction/', views.transaction, name = 'transaction'),
 ]
 
 if settings.DEBUG:
