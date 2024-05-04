@@ -1,0 +1,35 @@
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Static files
+/staticfiles/
+
+# Media files
+/media/
+
+# Database
+*.sqlite3
+
+# Secret key
+*.secret
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
+*.swp
+*.swo
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary files
+*.log
+*.tmp
+
+# Ignore migrations (for Django apps)
+**/migrations/

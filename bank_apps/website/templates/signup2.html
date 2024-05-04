@@ -67,15 +67,19 @@
           <hr width="60px" color="grey" />
           <hr width="60px" color="grey" />
         </div>
+        <input type="hidden" name="form_id" id="signup2" value="signup2">
         <label for="email" style="color:grey; font-size:11px;">Email</label><br>
-        <input type="email" id="email" name="email"
+        <input type="email" id="email" name="email" value="{{ email }}"
           style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
         <label for="phone_number" style="color:grey; font-size:11px;">Phone Number</label><br>
-        <input type="text" id="phone_number" name="phone_number" minlength="10" maxlength="10" pattern="[0-9]{10}"
+        <input type="text" id="phone_number" name="phone_number" value="{{ phone_number }}" minlength="10" maxlength="10" pattern="[0-9]{10}"
           style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
         <label for="dob" style="color:grey; font-size:11px;">Date of Birth</label><br>
-        <input type="date" id="dob" name="dob"
+        <input type="date" id="dob" name="dob" value="{{ dob }}"
           style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+          {% if error_message %}
+          <p style="color:red"> {{error_message}}</p>
+          {% endif %}
           <div style="margin-top: 2rem;">
           <input type = "submit" name ="actionBtn" value="Back" style="background-color: white; color:#931a46 ;font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
         <input type = "submit" name ="actionBtn" value="Proceed"  onclick="return validateForm()" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
