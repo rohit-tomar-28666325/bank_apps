@@ -47,5 +47,16 @@ class Cards(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     class Meta:  
         db_table = "cards"
+
+class RecurringPayment(models.Model):
+    id = models.AutoField(primary_key=True)
+    customer_id = models.CharField(max_length=20, blank=True, default='')
+    amount = models.CharField(max_length=15, blank=True, default='')
+    ct = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    account_number = models.CharField(max_length=10, blank=True, default='')
+    frequency = models.CharField(max_length=10, blank=True, default='')
+    status = models.CharField(max_length=10, blank=True, default='A')
+    class Meta:  
+        db_table = "recurringPayment"  
   
   
