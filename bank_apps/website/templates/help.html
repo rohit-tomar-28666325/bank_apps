@@ -108,8 +108,9 @@
         }
 
         function logOut() {
+            window.history.replaceState(null, null, "/login");
             sessionStorage.clear();
-            window.location.href = '/login/'
+            window.location.href = "/logout";     
         }
 
     </script>

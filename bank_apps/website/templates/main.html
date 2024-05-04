@@ -87,6 +87,8 @@
                 window.location.href = '/transaction/'
             } else if (option == "cardOption") {
                 window.location.href = '/card/'
+            } else if (option == "chequebookOption") {
+                window.location.href = '/chequebook/'
             } else if (option == "loanOption") {
                 window.location.href = '/loan/'
             } else if (option == "investmentOption") {
@@ -99,8 +101,9 @@
         }
 
         function logOut() {
+            window.history.replaceState(null, null, "/login");
             sessionStorage.clear();
-            window.location.href = '/login/'
+            window.location.href = "/logout";                         
         }
 
         function checkForError() {
@@ -129,6 +132,11 @@
                     <img src="{% static 'img/card.png' %}" alt="image">
                     <p>Card</p>
                 </div>
+                <div class="itemNav" onclick="showContent('chequebookOption')" id="chequebookOption-nav"
+                    style="padding-right: 4.5rem;">
+                    <img src="{% static 'img/card.png' %}" alt="image">
+                    <p>Cheque Book</p>
+               </div>
                 <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav" style="padding-right: 4.5rem;">
                     <img src="{% static 'img/loan.png' %}" alt="image">
                     <p>Loan</p>
@@ -156,7 +164,7 @@
         <div class="right">
             <div id="dashboardOption-content" class="content" style="display: block;">
                 {% block dashboard %}
-                {% include "dashboard.html" with username=username tableData=tableData totalBalance=totalBalance totalIncome=totalIncome totalOutcome=totalOutcome %}
+                {% include "dashboard.html" with username=username  account_number=account_number account_type=account_type tableData=tableData totalBalance=totalBalance totalIncome=totalIncome totalOutcome=totalOutcome %}
                 {% endblock %}
 
             </div>

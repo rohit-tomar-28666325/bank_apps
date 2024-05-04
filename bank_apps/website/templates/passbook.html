@@ -76,92 +76,17 @@
             flex-direction: column-reverse;
         }
 
-        .row {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-
-        }
-
-        .filters {
-            flex-grow: 1;
-            display: flex;
-            justify-content: inherit;
-        }
-
-        .filters>div {
-            background-color: aqua;
-            padding: 0.3rem;
-            min-width: 4rem;
-            text-align: center;
-        }
-
-        .downloadBtn {
-            display: flex;
-            flex-grow: 4;
-            justify-content: flex-end;
-        }
-
-        .alignFilters {
-            margin-bottom: 1rem;
-        }
-        .filterItems{
+        .formAlignment {
             display: flex;
             flex-direction: column;
-            text-align: left;
+            padding: 3rem;
+            width: max-content;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
     <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var buttons = document.querySelectorAll('.pdf-all-button');
-            buttons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                  console.log(JSON.parse('{{ transactionData|safe }}'))
-                    generateAndDownloadPdfAll();
-
-                });
-            });
-        });
-
-        function generateAndDownloadPdfAll() {
-           var transData = JSON.parse('{{ transactionData|safe }}')
-            // Define your PDF document definition
-            var docDefinition = {
-                content: [
-                    { text: 'Transaction Statement', fontSize: 24, bold: true, alignment: "center", margin: [0, 10, 10, 10] },
-                    {
-                        table: {
-                            margin: [0, 10, 10, 10],
-                            alignment: "center",
-                            headerStyles: {
-                                fillColor: '#97144D'
-                            },
-                            headerRows: 1,
-                            widths: ['*', '*', '*', '*', '*'],
-                            body: [
-                                ['Date', 'Transaction Type' , 'Amount', 'Remark' ,'Status'],
-                                ...transData.map(transaction => [
-                                    transaction.fields['date'],
-                                    transaction.fields['transType'],
-                                    `£${transaction.fields['amount']}`,
-                                    transaction.fields['summary'],
-                                    "Success"
-                                ])
-                            ]
-
-                        }
-                    }
-
-                    // Add more content as needed
-                ]
-            };
-
-            // Generate the PDF
-            pdfMake.createPdf(docDefinition).download('statement.pdf');
-        }
         function showContent(option) {
             if (option == "dashboardOption") {
                 window.location.href = '/main/'
@@ -242,67 +167,18 @@
             </div>
         </div>
         <div class="right">
-            <h2>Transactions</h2>
+            <h2>Raise Chequebook Request</h2>
+            <h3>We will deliver chequebook to your adderss</h3>
             <div class="container">
-                <div class="row alignFilters">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="filters">
-                            <div class="filterItems">
-                                <label for="date">Date</label>
-                                <input type="date" id="date-filter" name="date" value="{{date}}" />
-                            </div>
-                            <div class="filterItems">
-                                <label for="amount">Amount</label>
-                                <input type="text" id="amount-filter" name="amount" value="{{amount}}" />
-                            </div>
-                            <div class="filterItems">
-                                <label for="transType">Transaction Type</label>
-                                <select id="title" name="transType" value="{{transType}}" style="
-                                font-size: 11px;
-                                border: 2px solid grey;
-                                border-radius: 7px;
-                                padding: 5px;
-                              ">    
-                                    <option value = "None" {% if transType == "None" %} selected = "selected" {% endif %}> None </option>
-                                    <option value = "transfer" {% if transType == "Transfer" %} selected = "selected" {% endif %}> Transfer </option>
-                                    <option value = "withdraw" {% if transType == "withdraw" %} selected = "selected" {% endif %}> Withdraw </option>
-                                    <option value = "credit" {% if transType == "credit" %} selected = "selected" {% endif %}> Credit </option>
-                                    <option value = "deposit" {% if transType == "deposit" %} selected = "selected" {% endif %}> Deposit </option>
-                                </select>
-
-                            </div>
-                            <div>
-                                <input type="submit" value="Filter" name="actionBtn" />
-                            </div>
-                            <div>
-                                <input type="submit" value="Clear Filter" name="actionBtn"/>
-                            </div>
-                        </div>
+                    <form id="chequebookForm" method="POST">
+                        <div class="formAlignment">
+                            {% csrf_token %}
+                            <label for="summary" style="color:grey; font-size:16px;"> Enter Your Remark</label><br>
+                            <input type="text" name="summary" placeholder="Enter Your Remark." required style="font-size:16px; border: 2px solid grey; border-radius: 7px;padding: 5px;">
+                            <button type="submit" style="padding: 1px 153px; background-color:#931a46; color:white; font-size:16px; border: 2px solid grey; border-radius: 7px;">Request Chequebook</button>
+                        </div>    
                     </form>
-                        <div class="downloadBtn">
-                            <button class="pdf-all-button">Download </button>
-                        </div>
-                    
-                   
-
-                </div>
             </div>
-            {% if tableData %}
-            <div>
-                {% block TransactionTable %}
-                {% with tableData=tableData %}
-                {% include "table.html" %}
-                {% endwith %}
-                {% endblock %}
-            </div> 
-            {% else %}
-            {% if totalUnFilteredDataCount %} 
-            <h3> No Data available for the filter, please Reset the filter</h3>
-            {% else %}
-            <h3> No Transactions Done yet</h3>
-            {% endif %}
-            {% endif %}
         </div>
     </div>
 </body>

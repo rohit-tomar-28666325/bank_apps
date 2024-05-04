@@ -1,11 +1,14 @@
 from django.views import View
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 
 from ..repositories.transaction import TransactionRepository, Transaction
 from django.core.serializers import serialize
 from datetime import datetime, time
 
 
+@method_decorator(never_cache, name='dispatch')
 class TransactionView(View):
 
     def get(self, request):
