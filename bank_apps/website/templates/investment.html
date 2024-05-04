@@ -289,11 +289,17 @@
                     {% for obj in tableData %}
                     <tr>
                         <td>{{obj.ct}}</td>
-                        <td>{{obj.accountNo}}</td>
+                        <td>{{obj.account_number}}</td>
                         <td>£{{obj.amount}}</td>
                         <td>{{obj.frequency}}</td>
                         <td>
-                            <div class="statusChip">{{obj.status}}</div>
+                            <div class="statusChip">
+                                {% if obj.status == 'A' %}
+                                    Active
+                                {% else %}
+                                    Inactive
+                                {% endif %}
+                            </div>
                         </td>
                     </tr>
                     {% endfor %}
