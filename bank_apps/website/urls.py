@@ -8,6 +8,7 @@ from .viewsModules.signup import SignUpView
 from .viewsModules.otp import OTPView
 from .viewsModules.dashboard import DashboardView
 from .viewsModules.transaction import TransactionView
+from .viewsModules.recurringPayment import RecurringPaymentView
 from .viewsModules.setting import SettingView
 
 
@@ -26,7 +27,7 @@ urlpatterns = [
     path('settings/', SettingView.as_view(), name = 'settings'),
     path('loan/', views.loan, name = 'loan'),
     path('help/', views.help, name = 'help'),
-    path('investment/', views.investment, name = 'investment'),
+    path('investment/', RecurringPaymentView.as_view(), name = 'investment'),
     path('transaction/', TransactionView.as_view(), name = 'transaction'),
 ]
 
