@@ -8,6 +8,7 @@ from .viewsModules.signup import SignUpView
 from .viewsModules.otp import OTPView
 from .viewsModules.dashboard import DashboardView
 from .viewsModules.transaction import TransactionView
+from .viewsModules.recurringPayment import RecurringPaymentView
 from .viewsModules.setting import SettingView
 from .viewsModules.logout import LogoutView
 from .viewsModules.passbook import PassbookView
@@ -34,7 +35,7 @@ urlpatterns = [
     path('settings/', login_required(SettingView.as_view()), name='settings'),
     path('loan/', login_required(LoanView.as_view()), name='loan'),
     path('help/', login_required(views.help), name='help'),
-    path('investment/', login_required(views.investment), name='investment'),
+    path('investment/', login_required(RecurringPaymentView.as_view()), name='investment'),
     path('transaction/', login_required(TransactionView.as_view()), name='transaction'),
     path('logout/', login_required(LogoutView.as_view()), name='logout')
 ]

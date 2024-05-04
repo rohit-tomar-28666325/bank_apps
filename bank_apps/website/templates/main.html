@@ -15,7 +15,7 @@
             width: 85%;
             float: right;
             margin-top: 0;
-            background-color: grey;
+            background-color: #ebebeb;
             height: calc(100vh - 3rem);
         }
 
@@ -31,7 +31,7 @@
 
         .header {
             padding: 1.5rem;
-            background-color: aliceblue;
+            background-color: #f7f5f5;
         }
 
         .vertical-menu {
@@ -77,6 +77,10 @@
         .menu {
             display: flex;
             flex-direction: column-reverse;
+        }
+        .recurring {
+            padding-right: 0rem;
+            padding-left: 0.5rem;
         }
     </style>
     <script>
@@ -141,9 +145,9 @@
                     <img src="{% static 'img/loan.png' %}" alt="image">
                     <p>Loan</p>
                 </div>
-                <div class="itemNav" onclick="showContent('investmentOption')" id="investmentOption-nav">
+                <div class="itemNav recurring" onclick="showContent('investmentOption')" id="investmentOption-nav">
                     <img src="{% static 'img/investment.png' %}" alt="image">
-                    <p>Investment</p>
+                    <p>Recurring Payment</p>
                 </div>
                 <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav" style="padding-right: 3.5rem;">
                     <img src="{% static 'img/setting.png' %}" alt="image">
