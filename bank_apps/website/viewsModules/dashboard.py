@@ -23,7 +23,7 @@ class DashboardView(View):
         try:
             customerId = request.session['customerId']
             account_number = request.session['accountNumber']
-            account_type = request.session['accountType']
+            account_type = request.session['accountType'].capitalize()
             username = request.session['customerName']
             if 'errorMessage' in request.session:
                 error_message = request.session['errorMessage']

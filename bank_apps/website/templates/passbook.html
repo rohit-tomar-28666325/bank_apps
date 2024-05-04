@@ -4,7 +4,7 @@
 <head>
     <style>
         .container {
-            margin: 0;
+            margin: -1rem;
             overflow: hidden;
         }
 
@@ -12,7 +12,7 @@
             width: 85%;
             float: right;
             margin-top: 0;
-            background-color: grey;
+            background-color: #ebebeb;
             height: calc(100vh - 3rem);
         }
 
@@ -28,7 +28,7 @@
 
         .header {
             padding: 1.5rem;
-            background-color: aliceblue;
+            background-color: #f7f5f5;
         }
 
         .vertical-menu {
@@ -82,6 +82,10 @@
             padding: 3rem;
             width: max-content;
         }
+        .recurring {
+            padding-right: 0rem;
+            padding-left: 0.5rem;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
@@ -125,7 +129,7 @@
                     <img src="{% static 'img/dashboard.png' %}" alt="image">
                     <p>Dashboard</p>
                 </div>
-                <div class="itemNav active" onclick="showContent('transactionOption')" id="transactionOption-nav">
+                <div class="itemNav" onclick="showContent('transactionOption')" id="transactionOption-nav">
                     <img src="{% static 'img/transaction.png' %}" alt="image">
                     <p>Transaction</p>
                 </div>
@@ -135,23 +139,24 @@
                     <p>Card</p>
                 </div>
                 <div class="itemNav" onclick="showContent('chequebookOption')" id="chequebookOption-nav"
-                    style="padding-right: 4.5rem;">
-                    <img src="{% static 'img/card.png' %}" alt="image">
+                    style="padding-right: 1.5rem;">
+                    <img src="{% static 'img/cheque.png' %}" alt="image" style="width: 33px;
+                        height: 40px;">
                     <p>Cheque Book</p>
-               </div>
+                </div>
                 <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav"
                     style="padding-right: 4.5rem;">
                     <img src="{% static 'img/loan.png' %}" alt="image">
                     <p>Loan</p>
                 </div>
-                <div class="itemNav" onclick="showContent('investmentOption')" id="investmentOption-nav">
+                <div class="itemNav recurring" onclick="showContent('investmentOption')" id="investmentOption-nav">
                     <img src="{% static 'img/investment.png' %}" alt="image">
-                    <p>Investment</p>
+                    <p>Recurrent Payment</p>
                 </div>
-                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav"
+                <div class="itemNav " onclick="showContent('settingsOption')" id="settingsOption-nav"
                     style="padding-right: 3.5rem;">
                     <img src="{% static 'img/setting.png' %}" alt="image">
-                    <p>Settings</p>
+                    <p>Setting</p>
                 </div>
             </div>
             <div class="vertical-menu menu">
@@ -167,15 +172,16 @@
             </div>
         </div>
         <div class="right">
-            <h2>Raise Chequebook Request</h2>
-            <h3>We will deliver chequebook to your adderss</h3>
-            <div class="container">
+            <h2 style="text-align: center;">Raise Chequebook Request</h2>
+            <h3  style="text-align: center;">We will deliver chequebook to your adderss</h3>
+            <div class="container" style="display: flex; justify-content: center;">
                     <form id="chequebookForm" method="POST">
                         <div class="formAlignment">
                             {% csrf_token %}
                             <label for="summary" style="color:grey; font-size:16px;"> Enter Your Remark</label><br>
                             <input type="text" name="summary" placeholder="Enter Your Remark." required style="font-size:16px; border: 2px solid grey; border-radius: 7px;padding: 5px;">
-                            <button type="submit" style="padding: 1px 153px; background-color:#931a46; color:white; font-size:16px; border: 2px solid grey; border-radius: 7px;">Request Chequebook</button>
+                            <button type="submit" style="padding: 1px 153px; background-color:#931a46; color:white; font-size:16px; border: 2px solid grey; border-radius: 7px; margin-top: 3rem;
+                            height: 2rem;">Request Chequebook</button>
                         </div>    
                     </form>
             </div>
