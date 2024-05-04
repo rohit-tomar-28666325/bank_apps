@@ -14,11 +14,11 @@ from django.db.models import Q
 from django.core.serializers import serialize
 import time
 
-def home(request):
-    return render(request, 'login.html', {'title': 'home'})
+# def home(request):
+#    return render(request, 'login.html', {'title': 'home'})
 
-def about(request):
-    return render(request, 'login.html', {'title': 'about'})
+# def about(request):
+#    return render(request, 'login.html', {'title': 'about'})
 
 def login(request):
     error_message =None
@@ -77,7 +77,7 @@ def main(request):
     "totalOutcome" : totalOutcome, "totalBalance" : totalBalance, "isSuccess": isSuccess})
 
 def card(request):
-    if request.method =="POST" :
+    if request.method =="POST":
         request.session['tempData0'] = request.POST
         if request.POST['actionBtn'] == 'Proceed':
             return redirect('dashboard')
@@ -128,6 +128,9 @@ def loan(request):
 def help(request):
     return render(request, 'help.html')
 
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
 def filterTransaction(date="", amount="", transType="", email=""):
     if date:
         date = datetime.strptime(date, "%Y-%m-%d").strftime("%d/%m/%Y")  
@@ -174,10 +177,11 @@ def transaction(request):
     return render(request, 'transaction.html', {"tableData" : tableData, "date": date, "amount":amount, "transType":transType, "totalUnFilteredDataCount":totalUnFilteredDataCount, "transactionData": serialize('json', tableData)})
 
 def signup1(request):
-    if request.method =="POST" :
-         request.session['tempData1'] = request.POST
-         if request.POST['actionBtn'] == 'Proceed':
-             return redirect('signup2')
+    if request.method == "POST":
+        request.session['tempData1'] = request.POST
+        print("tempData1 set in session:", request.session['tempData1'])  # Add this debug print
+        if request.POST['actionBtn'] == 'Proceed':
+            return redirect('signup2')
 
     return render(request, 'signup1.html')
 
