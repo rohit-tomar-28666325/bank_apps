@@ -18,15 +18,15 @@
             {% csrf_token %}
 
             <div class="formAlignment">
-                <label for="account_number_and_name" style="color:grey; font-size:16px;">
+                <label for="account_number" style="color:grey; font-size:16px;">
                     Enter Account Number
                 </label><br>
-                <input type="text" id="account_number_and_name" name="account_number_and_name"
+                <input type="number" id="account_number" name="account_number" minlength="1" maxlength="10" pattern="[0-9]+"
                     style="font-size:16px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
                 <label for="amount" style="color:grey; font-size:16px;">Enter Amount</label><br>
-                <input type="text" id="amount" name="amount"
+                <input type="number" id="amount" name="amount" minlength="1" maxlength="6" pattern="[0-9]+"
                     style="font-size:16px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
-                <input type="submit" value="Transfer" name="transType" id="transferBtn"
+                <input type="submit" value="transfer" name="transType" id="transferBtn" onclick="return validate()"
                     style="padding: 1px 153px; background-color:#931a46; color:white; font-size:16px; border: 2px solid grey; border-radius: 7px;">
 
             </div>

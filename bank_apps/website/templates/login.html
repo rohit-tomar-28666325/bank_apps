@@ -49,7 +49,7 @@
     <div class="right alignSignUps ">
       <h1>Online Banking Services</h1>
       <p style="color:grey">login into your account</p>
-      <form method="POST" style="width:45%">
+      <form method="POST" action="{% url 'login' %}" style="width:45%">
         {% csrf_token %}
         <label for="email" style="color:grey; font-size:11px;">Enter your email address</label><br>
         <input type="text" id="email" name="email"

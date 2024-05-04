@@ -103,10 +103,16 @@
             window.location.href = '/login/'
         }
 
+        function checkForError() {
+            var error_message = "{{ error_message }}";
+            if(error_message)
+               alert(error_message);
+        }
+    
     </script>
 </head>
 
-<body>
+<body onload="checkForError()">
     <div class="container">
         <div class="row header"> </div>
         <div class="left">

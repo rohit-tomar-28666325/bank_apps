@@ -99,12 +99,12 @@
             <form method="POST">
                 {% csrf_token %}
                 <div class="flex-container">
-                    <div><input type="text" name="otp1" /></div>
-                    <div><input type="text" name="otp2" /></div>
-                    <div><input type="text" name="otp3" /></div>
-                    <div><input type="text" name="otp4" /></div>
-                    <div><input type="text" name="otp5" /></div>
-                    <div><input type="text" name="otp6" /></div>
+                    <div><input type="text" name="otp1" minlength="1" maxlength="1" pattern="[0-9]"/></div>
+                    <div><input type="text" name="otp2" minlength="1" maxlength="1" pattern="[0-9]"/></div>
+                    <div><input type="text" name="otp3" minlength="1" maxlength="1" pattern="[0-9]"/></div>
+                    <div><input type="text" name="otp4" minlength="1" maxlength="1" pattern="[0-9]"/></div>
+                    <div><input type="text" name="otp5" minlength="1" maxlength="1" pattern="[0-9]"/></div>
+                    <div><input type="text" name="otp6" minlength="1" maxlength="1" pattern="[0-9]"/></div>
                 </div>
                 {% if error_message %}
                 <p style="color:red; text-align: center;"> {{error_message}}</p>

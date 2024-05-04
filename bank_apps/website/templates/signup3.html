@@ -71,13 +71,14 @@
             <hr width="60px" color="#931a46" />
             <hr width="60px" color="grey" />
           </div>
+        <input type="hidden" name="form_id" id="signup3" value="signup3">
         <label for="address" style="color:grey; font-size:11px;">Address</label><br>
-        <input type="text" id="address" name="address" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
+        <input type="text" id="address" name="address" value="{{ address }}" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
         <label for="city" style="color:grey; font-size:11px;">City / Town</label><br>
-        <input type="text" id="city" name="city" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+        <input type="text" id="city" name="city" value="{{ city }}" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
         <label for="country" style="color:grey; font-size:11px;">County
         <label for="postal_code" style="color:grey; font-size:11px;"><span style="display:inline-block; width: 125px;"></span>Post Code</label></label><br>
-        <input type="text" id="country" name="country" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><span style="display:inline-block; width: 2px;"></span><input type="text" id="postal_code" name="postal_code" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
+        <input type="text" id="country" name="country" value="{{ country }}" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><span style="display:inline-block; width: 2px;"></span><input type="text" id="postal_code" value="{{ postal_code }}" name="postal_code" style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br>
         <input type = "submit" name ="actionBtn" value="Back" style="background-color: white; color:#931a46; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"/>
         <input type = "submit" name ="actionBtn" value="Proceed" onclick="return validateForm()" style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" />
         <p>Already have an account? <a style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;" href="/login">Sign In</a></p>
