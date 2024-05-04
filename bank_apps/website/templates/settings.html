@@ -235,25 +235,25 @@
               <div class="secondBlock">
                 {% csrf_token %}
                 <label for="first_name" style="color:grey; font-size:11px;">First Name</label> <br />
-                <input type="text" id="first_name" name="first_name" style="
+                <input type="text" id="first_name" name="first_name" value="{{first_name}}" style=" 
               font-size: 11px;
               border: 2px solid grey;
               border-radius: 7px;
               padding: 5px;
             " /><br />
                 <label for="last_name" style="color:grey; font-size:11px;">Last Name</label><br />
-                <input type="text" id="last_name" name="last_name" style="
+                <input type="text" id="last_name" name="last_name" value="{{last_name}}"style="
               font-size: 11px;
               border: 2px solid grey;
               border-radius: 7px;
               padding: 5px;
             " /><br />
                 <label for="email" style="color:grey; font-size:11px;">Email Address</label><br />
-                <input type="email" id="email" name="email"
+                <input type="email" id="email" name="email" value="{{email}}"
                   style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br />
 
                 <label for="phone_number" style="color:grey; font-size:11px;">Phone Number</label><br />
-                <input type="text" id="phone_number" name="phone_number" minlength="10" maxlength="10"
+                <input type="text" id="phone_number" name="phone_number" value="{{phone_number}}" minlength="10" maxlength="10"
                   pattern="[0-9]{10}"
                   style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br />
                 <input type="submit" name="actionBtn" value="Submit"

@@ -4,15 +4,18 @@ import pyotp
 from django.conf import settings
 from django.core.mail import send_mail
 from website.forms import CustomersForm, TransactionForm 
-from website.models import Customers, Transaction
+from .models.models import Customers
+from .models.models import Transaction
 from django.db.models import Sum
 from django.db import OperationalError
 from datetime import date, datetime, time, timedelta
-from backports.datetime_fromisoformat import MonkeyPatch
-MonkeyPatch.patch_fromisoformat()
+# from backports.datetime_fromisoformat import MonkeyPatch
+# MonkeyPatch.patch_fromisoformat()
 from django.db.models import Q
 from django.core.serializers import serialize
 import time
+
+from .utils.otp import OTPHandler
 
 def home(request):
     return render(request, 'login.html', {'title': 'home'})

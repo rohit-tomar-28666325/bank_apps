@@ -1,6 +1,6 @@
 from django import forms  
-from website.models import Customers  
-from website.models import Transaction  
+from .models.models import Customers  
+from .models.models import Transaction  
 class CustomersForm(forms.ModelForm):  
     class Meta:  
         model = Customers  

@@ -137,17 +137,17 @@
                             margin: [0, 10, 10, 10],
                             alignment: "center",
                             headerStyles: {
-                                fillColor: '#97144D' // Background color for the header row
+                                fillColor: '#97144D'
                             },
                             headerRows: 1,
                             widths: ['*', '*', '*', '*', '*'],
                             body: [
-                                ['Name', 'Transaction Type', 'Date', 'Amount', 'Status'], // Table header
+                                ['Date', 'Transaction Type' , 'Amount', 'Remark' ,'Status'],
                                 ...transData.map(transaction => [
-                                    transaction.fields['account_number_and_name'],
-                                    transaction.fields['transType'],
                                     transaction.fields['date'],
-                                    `£${transaction.fields['amount']}`, // Adjusted amount formatting and added currency symbol
+                                    transaction.fields['transType'],
+                                    `£${transaction.fields['amount']}`,
+                                    transaction.fields['summary'],
                                     "Success"
                                 ])
                             ]
@@ -257,9 +257,10 @@
                                 padding: 5px;
                               ">    
                                     <option value = "None" {% if transType == "None" %} selected = "selected" {% endif %}> None </option>
-                                    <option value = "Transfer" {% if transType == "Transfer" %} selected = "selected" {% endif %}> Transfer </option>
-                                    <option value = "withdraw" {% if transType == "withdraw" %} selected = "selected" {% endif %}> withdraw </option>
-                                    <option value = "deposit" {% if transType == "deposit" %} selected = "selected" {% endif %}> deposit </option>
+                                    <option value = "transfer" {% if transType == "Transfer" %} selected = "selected" {% endif %}> Transfer </option>
+                                    <option value = "withdraw" {% if transType == "withdraw" %} selected = "selected" {% endif %}> Withdraw </option>
+                                    <option value = "credit" {% if transType == "credit" %} selected = "selected" {% endif %}> Credit </option>
+                                    <option value = "deposit" {% if transType == "deposit" %} selected = "selected" {% endif %}> Deposit </option>
                                 </select>
 
                             </div>
