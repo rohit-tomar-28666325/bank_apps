@@ -31,7 +31,6 @@ class CardsRepository:
     def encryptData(data):
         for key in CardsRepository.encryptedFields:
             if key in data:
-                print(data.get(key))
                 data[key] = Cryptography.encryption(str(data.get(key)))
 
         return data
@@ -40,7 +39,6 @@ class CardsRepository:
     def decryptData(data):
         for key in CardsRepository.encryptedFields:
             if key in data:
-                print(data.get(key))
                 data[key] = Cryptography.decryption(str(data.get(key)))
 
         return data
@@ -52,8 +50,6 @@ class CardsRepository:
         cardData = data
         if len(data) > 1:
             cardData = data[0]
-
-        print("Encrypted Card data", data)
         return CardsRepository.decryptData(cardData)
 
     def blockCard(cardId):

@@ -1,21 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
 
-<!-- {% block content %} -->
-
-<html>
-
 <head>
     <style>
         .container {
-            margin: -1rem;
+            margin: 0;
             overflow: hidden;
         }
+
         .right {
             width: 85%;
             float: right;
             margin-top: 0;
-            background-color: #ebebeb;
+            background-color: grey;
             height: calc(100vh - 3rem);
         }
 
@@ -31,7 +28,7 @@
 
         .header {
             padding: 1.5rem;
-            background-color: #f7f5f5;
+            background-color: aliceblue;
         }
 
         .vertical-menu {
@@ -40,26 +37,26 @@
             background-color: #ffffff;
         }
 
-        .vertical-menu 
-        {
+        .vertical-menu {
             div {
-            background-color: #ffffff;
-            color: black;
-            display: block;
-            text-decoration: none;
+                background-color: #ffffff;
+                color: black;
+                display: block;
+                text-decoration: none;
+            }
         }
-    }
 
         .vertical-menu {
             div:hover {
-            background-color: #97144d;
-            color: #ffffff
-        }
+                background-color: #97144d;
+                color: #ffffff
+            }
+
             div:active {
-            background-color: #97144d;
-            color: #ffffff
+                background-color: #97144d;
+                color: #ffffff
+            }
         }
-    }
 
         .itemNav {
             display: flex !important;
@@ -78,12 +75,18 @@
             display: flex;
             flex-direction: column-reverse;
         }
-        .recurring {
-            padding-right: 0rem;
-            padding-left: 0.5rem;
+
+        .formAlignment {
+            display: flex;
+            flex-direction: column;
+            padding: 3rem;
+            width: max-content;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
     <script>
+
         function showContent(option) {
             if (option == "dashboardOption") {
                 window.location.href = '/main/'
@@ -107,32 +110,27 @@
         function logOut() {
             window.history.replaceState(null, null, "/login");
             sessionStorage.clear();
-            window.location.href = "/logout";                         
+            window.location.href = "/logout";
         }
 
-        function checkForError() {
-            var error_message = "{{ error_message }}";
-            if(error_message)
-               alert(error_message);
-        }
-    
     </script>
 </head>
 
-<body onload="checkForError()">
+<body>
     <div class="container">
         <div class="row header"> </div>
         <div class="left">
             <div class="vertical-menu" id="menuNav">
-                <div class="itemNav active" onclick="showContent('dashboardOption')" id="dashboardOption-nav">
+                <div class="itemNav" onclick="showContent('dashboardOption')" id="dashboardOption-nav">
                     <img src="{% static 'img/dashboard.png' %}" alt="image">
                     <p>Dashboard</p>
                 </div>
-                <div class="itemNav" onclick="showContent('transactionOption')" id="transactionOption-nav">
+                <div class="itemNav active" onclick="showContent('transactionOption')" id="transactionOption-nav">
                     <img src="{% static 'img/transaction.png' %}" alt="image">
                     <p>Transaction</p>
                 </div>
-                <div class="itemNav" onclick="showContent('cardOption')" id="cardOption-nav" style="padding-right: 4.5rem;">
+                <div class="itemNav" onclick="showContent('cardOption')" id="cardOption-nav"
+                    style="padding-right: 4.5rem;">
                     <img src="{% static 'img/card.png' %}" alt="image">
                     <p>Card</p>
                 </div>
@@ -141,15 +139,17 @@
                     <img src="{% static 'img/card.png' %}" alt="image">
                     <p>Cheque Book</p>
                </div>
-                <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav" style="padding-right: 4.5rem;">
+                <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav"
+                    style="padding-right: 4.5rem;">
                     <img src="{% static 'img/loan.png' %}" alt="image">
                     <p>Loan</p>
                 </div>
-                <div class="itemNav recurring" onclick="showContent('investmentOption')" id="investmentOption-nav">
+                <div class="itemNav" onclick="showContent('investmentOption')" id="investmentOption-nav">
                     <img src="{% static 'img/investment.png' %}" alt="image">
-                    <p>Recurring Payment</p>
+                    <p>Investment</p>
                 </div>
-                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav" style="padding-right: 3.5rem;">
+                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav"
+                    style="padding-right: 3.5rem;">
                     <img src="{% static 'img/setting.png' %}" alt="image">
                     <p>Settings</p>
                 </div>
@@ -159,26 +159,28 @@
                     <img src="{% static 'img/logout.png' %}" alt="image">
                     <p>Log out</p>
                 </div>
-                <div class="itemNav" onclick="showContent('helpOption')" id="helpOption-nav" style="padding-right: 4.9rem;">
+                <div class="itemNav" onclick="showContent('helpOption')" id="helpOption-nav"
+                    style="padding-right: 4.9rem;">
                     <img src="{% static 'img/help.png' %}" alt="image">
                     <p>Help</p>
                 </div>
             </div>
         </div>
         <div class="right">
-            <div id="dashboardOption-content" class="content" style="display: block;">
-                {% block dashboard %}
-                {% include "dashboard.html" with username=username  account_number=account_number account_type=account_type tableData=tableData totalBalance=totalBalance totalIncome=totalIncome totalOutcome=totalOutcome %}
-                {% endblock %}
-
+            <h2>Raise Chequebook Request</h2>
+            <h3>We will deliver chequebook to your adderss</h3>
+            <div class="container">
+                    <form id="chequebookForm" method="POST">
+                        <div class="formAlignment">
+                            {% csrf_token %}
+                            <label for="summary" style="color:grey; font-size:16px;"> Enter Your Remark</label><br>
+                            <input type="text" name="summary" placeholder="Enter Your Remark." required style="font-size:16px; border: 2px solid grey; border-radius: 7px;padding: 5px;">
+                            <button type="submit" style="padding: 1px 153px; background-color:#931a46; color:white; font-size:16px; border: 2px solid grey; border-radius: 7px;">Request Chequebook</button>
+                        </div>    
+                    </form>
             </div>
-           
-
-
         </div>
     </div>
 </body>
 
 </html>
-<!--style="padding: 1px 80px;-->
-<!-- {% endblock content %} -->

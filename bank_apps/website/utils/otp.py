@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 class OTPHandler:
     def __init__(self, request, emailId):
         self.request = request
-        self.TTL = 120  # 2 minutes
+        self.TTL = 180  # 2 minutes
         self.emailId = emailId
         self.OTP_KEY = 'OTP_' + emailId
         self.OTP_TTL_KEY = 'OTP_TTL_' + emailId
@@ -51,13 +51,11 @@ class OTPHandler:
     def validateOTP(self, enteredOTP):
         try:
             otp = self.request.session[self.OTP_KEY]
-            print(otp,enteredOTP)
             if self._isExpired() == False:
                 self._resetSession()
                 return False, self.expiredOTPMsg
 
             if str(otp) != str(enteredOTP):
-                # self._resetSession()
                 return False, self.invalidOTPMsg
 
             self._resetSession()

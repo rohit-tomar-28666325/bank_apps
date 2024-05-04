@@ -6,7 +6,7 @@ from .cards import CardsRepository
 class CustomerRepository:
     activeStatus = 'A'
     inActiveStatus = 'I'
-    fields = ['title', 'first_name', 'middle_name', 'last_name', 'email',
+    fields = ['account_type', 'title', 'first_name', 'middle_name', 'last_name', 'email',
               'phone_number', 'dob', 'address', 'city', 'country', 'postal_code', 'password']
     encryptedFields = ['phone_number', 'password']
 
@@ -22,7 +22,6 @@ class CustomerRepository:
     @staticmethod
     def getCustomerDetails(id):
         customer = CustomerRepository.findById(id)
-        print(customer)
         if customer:
             decryptedData = CustomerRepository.decryptData(customer)
             return decryptedData
@@ -49,14 +48,11 @@ class CustomerRepository:
 
     @staticmethod
     def createNewCustomer(request):
-        fields = ['title', 'first_name', 'middle_name', 'last_name', 'email',
-                  'phone_number', 'dob', 'address', 'city', 'country', 'postal_code', 'password']
-
         formData = {**request.session['tempData1'], **request.session['tempData2'],
                     **request.session['tempData3'], **request.session['tempData4']}
 
         customerData = {}
-        for key in fields:
+        for key in CustomerRepository.fields:
             customerData[key] = formData.get(key)
 
         isExist = CustomerRepository.findByEmail(customerData['email'])
@@ -75,8 +71,6 @@ class CustomerRepository:
         customer.save()
 
         caredStatus, msg = CardsRepository.createNewCard(customer_id)
-        print("Card Creation Status :", caredStatus, msg)
-
         request.session['customerId'] = customer_id
         CustomerRepository.setUserSession(request)
         return True, 'Success'
@@ -85,7 +79,6 @@ class CustomerRepository:
     def encryptData(data):
         for key in CustomerRepository.encryptedFields:
             if key in data:
-                print(data.get(key))
                 data[key] = Cryptography.encryption(str(data.get(key)))
 
         return data
@@ -94,17 +87,14 @@ class CustomerRepository:
     def decryptData(customerInstance):
         data = {field.name: getattr(customerInstance, field.name)
                 for field in customerInstance._meta.fields}
-        print(data)
         for key in CustomerRepository.encryptedFields:
             if key in data:
-                print(key, data.get(key))
                 data[key] = Cryptography.decryption(str(data.get(key)))
 
         return data
 
     @staticmethod
     def getFullName(customerData):
-        print(customerData)
         return customerData.first_name + ' ' + \
             customerData.middle_name + ' '+customerData.last_name
 
@@ -117,21 +107,17 @@ class CustomerRepository:
             request.session['customerName'] = CustomerRepository.getFullName(
                 customerData)
             request.session['accountNumber'] = customerData.account_number
+            request.session['accountType'] = customerData.account_type
             request.session['isLogin'] = True
 
     @staticmethod
     def deleteUserSession(request):
-        if 'customerId' in request.session:
-            del request.session['customerId']
-        if 'customerName' in request.session:
-            del request.session['customerName']
-        if 'accountNumber' in request.session:
-            del request.session['accountNumber']
-
-        request.session['isLogin'] = False
+        request.session.flush()
+        print('delete User Session success')
 
     @staticmethod
-    def updateProfile(customerId, updateData):
+    def updateProfile(request, updateData):
+        customerId = request.session['customerId']
         customer = Customers.objects.get(id=customerId)
         if 'first_name' in updateData:
             setattr(customer, 'first_name', updateData['first_name'])
@@ -140,15 +126,20 @@ class CustomerRepository:
             setattr(customer, 'last_name', updateData['last_name'])
 
         if 'phone_number' in updateData:
-            phone_number = Cryptography.encryption(str(updateData['phone_number']))
-            setattr(customer, 'password', phone_number)
+            phone_number = Cryptography.encryption(
+                str(updateData['phone_number']))
+            setattr(customer, 'phone_number', phone_number)
 
         if 'password' in updateData:
             password = Cryptography.encryption(str(updateData['password']))
             setattr(customer, 'password', password)
 
+        if 'account_type' in updateData:
+            setattr(customer, 'account_type', updateData['account_type'])
+
         if 'status' in updateData:
             setattr(customer, 'status', updateData['status'])
 
         customer.save()
+        CustomerRepository.setUserSession(request)
         return True

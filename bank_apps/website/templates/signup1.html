@@ -49,6 +49,10 @@
           return false;
         }
       }
+      function openPrivacyPolicy() {
+            window.open("/privacyPolicy", "Privacy Policy", "width=600,height=400");
+            return false;
+        }
     </script>
   </head>
 
@@ -68,6 +72,22 @@
             <hr width="60px" color="grey" />
             <hr width="60px" color="grey" />
           </div>
+          <label for="account_type" style="color: grey">Account Type</label><br />
+          <select
+            id="account_type"
+            name="account_type"
+            value="{{ account_type }}"
+            style="
+              font-size: 11px;
+              border: 2px solid grey;
+              border-radius: 7px;
+              padding: 5px;
+            "
+          >
+            <option value="saving">Saving</option>
+            <option value="current">Current</option>
+          </select>
+          <br />
           <label for="title" style="color: #000000">Title</label><br />
           <select
             id="title"
@@ -84,8 +104,8 @@
             <option value="Mr">Mr</option>
             <option value="Miss">Miss</option>
             <option value="Mrs">Mrs</option>
-            <!-- Add more options as needed --></select
-          ><br />
+            </select>
+          <br />
           <label for="first_name" style="color: #000000">First name</label><br />
           <input type="hidden" name="form_id" id="signup1" value="signup1" />
           <input
@@ -131,6 +151,11 @@
               padding: 5px;
             "
           /><br />
+          <label>
+            <input type="checkbox" name="privacy_policy" required>
+            I agree to the <a href="#" onclick="openPrivacyPolicy()">Privacy Policy</a>
+          </label><br>
+
           <div style="margin-top: 2rem">
             <input
               type="submit"

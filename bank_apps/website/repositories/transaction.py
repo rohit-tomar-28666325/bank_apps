@@ -56,7 +56,6 @@ class TransactionRepository:
                 "date": datetime.now().strftime("%Y/%m/%d")
 
             }
-            print("Depost Data", data)
             Transaction.objects.create(**data)
             return True, 'Success'
         except Exception as e:
@@ -114,7 +113,6 @@ class TransactionRepository:
                 "date": datetime.now().strftime("%Y/%m/%d")
 
             }
-            print("Withdraw Data", data)
             Transaction.objects.create(**data)
             return True, 'Success'
         except Exception as e:
