@@ -17,7 +17,6 @@
       float: right;
       margin-top: 0;
       background-color: #ebebeb;
-      height: calc(100vh - 3rem);
     }
 
     .left {
@@ -58,7 +57,8 @@
 
       div:active {
         background-color: #97144d;
-        color: #ffffff
+        color: #ffffff;
+        margin-bottom: 3rem;
       }
     }
 
@@ -90,7 +90,7 @@
     .secondSection {
       background-color: #ffffff;
       width: 45rem;
-      height: 28rem;
+      height: 35rem;
     }
 
     .secondBlock {
@@ -116,7 +116,7 @@
       } else if (option == "cardOption") {
         window.location.href = '/card/'
       }else if (option == "chequebookOption") {
-                window.location.href = '/chequebook/'
+        window.location.href = '/chequebook/'
       } else if (option == "loanOption") {
         window.location.href = '/loan/'
       } else if (option == "investmentOption") {
@@ -188,9 +188,10 @@
           <p>Card</p>
         </div>
         <div class="itemNav" onclick="showContent('chequebookOption')" id="chequebookOption-nav"
-                    style="padding-right: 4.5rem;">
-                    <img src="{% static 'img/card.png' %}" alt="image">
-                    <p>Cheque Book</p>
+            style="padding-right: 1.5rem;">
+            <img src="{% static 'img/cheque.png' %}" alt="image" style="width: 33px;
+             height: 40px;">
+            <p>Cheque Book</p>
         </div>
         <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav" style="padding-right: 4.5rem;">
           <img src="{% static 'img/loan.png' %}" alt="image">
@@ -242,11 +243,11 @@
             {% if editmessage %}
             <h3 style="text-align: center;"> Data Saved Successfully</h3>
             {% else %}
-            <h3 style="padding-left: 4rem;">Edit Profile</h3>
+            <h3 style="text-align: center;">Edit Profile</h3>
             <form method="POST">
               <div class="secondBlock">
                 {% csrf_token %}
-                <label for="account_type" style="color:grey; font-size:11px;">Account Type</label><br />
+                <label for="account_type" style="color:#000000; font-size:15px;">Account Type</label><br />
             <select
               id="account_type"
               name="account_type"
@@ -260,30 +261,31 @@
             <option value="saving" {% if account_type == "saving" %} selected {% endif %}>Saving</option>
             <option value="current" {% if account_type == "current" %} selected {% endif %}>Current</option>
             </select> <br />
-                <label for="first_name" style="color:grey; font-size:11px;">First Name</label> <br />
+                <label for="first_name" style="color:#000000; font-size:15px;">First Name</label> <br />
                 <input type="text" id="first_name" name="first_name" value="{{first_name}}" style=" 
               font-size: 11px;
               border: 2px solid grey;
               border-radius: 7px;
               padding: 5px;
             " /><br />
-                <label for="last_name" style="color:grey; font-size:11px;">Last Name</label><br />
+                <label for="last_name" style="color:#000000; font-size:15px;">Last Name</label><br />
                 <input type="text" id="last_name" name="last_name" value="{{last_name}}"style="
               font-size: 11px;
               border: 2px solid grey;
               border-radius: 7px;
               padding: 5px;
             " /><br />
-                <label for="email" style="color:grey; font-size:11px;">Email Address</label><br />
+                <label for="email" style="color:#000000; font-size:15px;">Email Address</label><br />
                 <input type="email" id="email" name="email" value="{{email}}" readonly
                   style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br />
 
-                <label for="phone_number" style="color:grey; font-size:11px;">Phone Number</label><br />
+                <label for="phone_number" style="color:#000000; font-size:15px;">Phone Number</label><br />
                 <input type="text" id="phone_number" name="phone_number" value="{{phone_number}}" minlength="10" maxlength="10"
                   pattern="[0-9]{10}"
                   style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br />
                 <input type="submit" name="actionBtn" value="Submit"
-                  style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px; width: 8rem" />
+                style="padding: 1px 153px; background-color:#931a46; color:white; font-size:15px; border: 2px solid grey; border-radius: 7px; width: -webkit-fill-available;
+                height: 2rem; margin-bottom: 1rem;" />
               </div>
             </form>
             {% endif %}
@@ -293,29 +295,30 @@
             {% if passwordmessage %}
             <h3 style="text-align: center;"> Password Changed Successfully</h3>
             {% else %}
-            <h3 style="padding-left: 4rem;">Change Password</h3>
+            <h3 style="text-align: center;">Change Password</h3>
             <form method="POST">
               <div class="secondBlock">
                 {% csrf_token %}
-                <label for="current_password" style="color:grey; font-size:11px;">Current Password</label> <br />
+                <label for="current_password" style="color:#000000; font-size:15px;">Current Password</label> <br />
                 <input type="text" id="current_password" name="current_password" style="
               font-size: 11px;
               border: 2px solid grey;
               border-radius: 7px;
               padding: 5px;
             " /><br />
-                <label for="password" style="color:grey; font-size:11px;">New Password</label><br />
+                <label for="password" style="color:#000000; font-size:15px;">New Password</label><br />
                 <input type="text" id="password" name="password" style="
               font-size: 11px;
               border: 2px solid grey;
               border-radius: 7px;
               padding: 5px;
             " /><br />
-                <label for="confirm_password" style="color:grey; font-size:11px;">Confirm Password</label><br />
+                <label for="confirm_password" style="color:#000000; font-size:15px;">Confirm Password</label><br />
                 <input type="text" id="confirm_password" name="confirm_password"
                   style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br />
                 <input type="submit" name="actionBtn" onclick="return validateForm()" value="Change Password"
-                  style="background-color: #931a46; color:white; font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px; width: 8rem" />
+                style="padding: 1px 153px; background-color:#931a46; color:white; font-size:15px; border: 2px solid grey; border-radius: 7px; width: -webkit-fill-available;
+                height: 2rem; margin-bottom: 1rem;" />
               </div>
             </form>
             {% endif %}
@@ -328,7 +331,8 @@
             <h3 style="text-align: center;"> Do you want to close your bank account?</h3>
             <form method="POST" style="text-align: center;">
               {% csrf_token %}
-              <input type="submit" name="actionBtn" value="Close Account" />
+              <input type="submit" name="actionBtn" value="Close Account" style="padding: 1px 153px; background-color:#931a46; color:white; font-size:15px; border: 2px solid grey; border-radius: 7px; width: -10rem;
+              height: 2rem; margin-bottom: 1rem;"/>
             </form>
             {% endif %}
           </div>

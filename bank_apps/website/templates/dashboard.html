@@ -131,15 +131,18 @@
 
 <body>
     <div class="dashboardContainer">
-        <div class="row">Good Morning</div>
-        <div class="row">
-            <h2>{{username}}</h6>
-        </div>
-        <div class="row">
-            <h2>Acc. No. {{account_number}}</h6>
-        </div>
-        <div class="row">
-            <h2>Acc. Type. {{account_type}}</h6>
+        <div>
+            <div style="display: flex;
+            justify-content: space-between;">
+                <div class="row">Good Morning
+                    <h2>{{username}}</h6>
+                </div>
+                <div>
+                    <h3 style="text-align: end;">Account No : {{account_number}}</h6>
+                    <h3 style="text-align: end;">Account Type : {{account_type}}</h6>
+                </div>
+            </div>
+
         </div>
         <div class="flexRow">
             <div class="flexBox">
