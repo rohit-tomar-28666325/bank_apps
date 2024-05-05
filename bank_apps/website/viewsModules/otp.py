@@ -1,10 +1,12 @@
 from django.views import View
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 
 from ..utils.otp import OTPHandler
 from ..repositories.customer import CustomerRepository
 
-
+@method_decorator(never_cache, name='dispatch')
 class OTPView(View):
 
     def get(self, request):

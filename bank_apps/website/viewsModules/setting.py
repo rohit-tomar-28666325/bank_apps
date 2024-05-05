@@ -1,9 +1,12 @@
 from django.views import View
 from django.shortcuts import render, redirect
 import time
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
+
 from ..repositories.customer import CustomerRepository
 
-
+@method_decorator(never_cache, name='dispatch')
 class SettingView(View):
 
     def get(self, request):
@@ -19,7 +22,8 @@ class SettingView(View):
             "first_name": customerDetails['first_name'],
             "last_name": customerDetails['last_name'],
             "email": customerDetails['email'],
-            "phone_number": customerDetails['phone_number']
+            "phone_number": customerDetails['phone_number'],
+            "account_type": customerDetails['account_type']
         }
         return render(request, 'settings.html', context=context)
 
@@ -40,15 +44,19 @@ class SettingView(View):
                 "first_name": customerDetails['first_name'],
                 "last_name": customerDetails['last_name'],
                 "email": customerDetails['email'],
-                "phone_number": customerDetails['phone_number']
+                "phone_number": customerDetails['phone_number'],
+                "account_type": customerDetails['account_type'],
+                
+                
             }
             if request.POST['actionBtn'] == 'Submit':
                 data = {
                     'first_name': request.POST['first_name'],
                     'last_name': request.POST['last_name'],
-                    'phone_number': request.POST['phone_number']
+                    'phone_number': request.POST['phone_number'],
+                    "account_type": request.POST['account_type']
                 }
-                status = CustomerRepository.updateProfile(customerId, data)
+                status = CustomerRepository.updateProfile(request, data)
                 if status:
                     context['editmessage'] = "Saved Successfully"
                 else:
@@ -58,7 +66,7 @@ class SettingView(View):
                 data = {
                     'password': request.POST['password']
                 }
-                status = CustomerRepository.updateProfile(customerId, data)
+                status = CustomerRepository.updateProfile(request, data)
                 if status:
                     context['passwordmessage'] = "Update Successfully"
                 else:
@@ -67,7 +75,7 @@ class SettingView(View):
                 data = {
                     'status': CustomerRepository.inActiveStatus
                 }
-                status = CustomerRepository.updateProfile(customerId, data)
+                status = CustomerRepository.updateProfile(request, data)
                 if status:
                     context['closemessage'] = "Closed Successfully"
                 else:

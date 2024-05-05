@@ -1,10 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 
-<!-- {% block content %} -->
-
-<html>
-
 <head>
     <style>
         .container {
@@ -79,20 +75,22 @@
             display: flex;
             flex-direction: column-reverse;
         }
-        .questions{
-            font-weight: bold;
-        }
-        .quesAns{
-            padding-left: 1rem;
-            padding-right: 1rem;
-            padding-bottom: 0.5rem;
+
+        .formAlignment {
+            display: flex;
+            flex-direction: column;
+            padding: 3rem;
+            width: max-content;
         }
         .recurring {
             padding-right: 0rem;
             padding-left: 0.5rem;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
     <script>
+
         function showContent(option) {
             if (option == "dashboardOption") {
                 window.location.href = '/main/'
@@ -100,16 +98,15 @@
                 window.location.href = '/transaction/'
             } else if (option == "cardOption") {
                 window.location.href = '/card/'
+            } else if (option == "chequebookOption") {
+                window.location.href = '/chequebook/'
             } else if (option == "loanOption") {
                 window.location.href = '/loan/'
             } else if (option == "investmentOption") {
                 window.location.href = '/investment/'
             } else if (option == "settingsOption") {
                 window.location.href = '/settings/'
-            } else if (option == "chequebookOption") {
-                window.location.href = '/chequebook/'
-            }
-            else {
+            } else {
                 window.location.href = '/help/'
             }
         }
@@ -117,7 +114,7 @@
         function logOut() {
             window.history.replaceState(null, null, "/login");
             sessionStorage.clear();
-            window.location.href = "/logout";     
+            window.location.href = "/logout";
         }
 
     </script>
@@ -154,12 +151,12 @@
                 </div>
                 <div class="itemNav recurring" onclick="showContent('investmentOption')" id="investmentOption-nav">
                     <img src="{% static 'img/investment.png' %}" alt="image">
-                    <p>Recurring Payment</p>
+                    <p>Recurrent Payment</p>
                 </div>
-                <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav"
+                <div class="itemNav " onclick="showContent('settingsOption')" id="settingsOption-nav"
                     style="padding-right: 3.5rem;">
                     <img src="{% static 'img/setting.png' %}" alt="image">
-                    <p>Settings</p>
+                    <p>Setting</p>
                 </div>
             </div>
             <div class="vertical-menu menu">
@@ -167,7 +164,7 @@
                     <img src="{% static 'img/logout.png' %}" alt="image">
                     <p>Log out</p>
                 </div>
-                <div class="itemNav active" onclick="showContent('helpOption')" id="helpOption-nav"
+                <div class="itemNav" onclick="showContent('helpOption')" id="helpOption-nav"
                     style="padding-right: 4.9rem;">
                     <img src="{% static 'img/help.png' %}" alt="image">
                     <p>Help</p>
@@ -175,33 +172,21 @@
             </div>
         </div>
         <div class="right">
-            <h2 style="padding-left: 1rem; padding-bottom: 1rem;">Frequenty Asked Questions</h3>
-            <div class="quesAns">
-                <p class="questions">How do I open a new account?</p>
-                <p class="answers">To open a new account, you can visit our nearest branch with the required documents
-                    or apply online through our website.</p>
+            <h2 style="text-align: center;">Raise Chequebook Request</h2>
+            <h3  style="text-align: center;">We will deliver chequebook to your adderss</h3>
+            <div class="container" style="display: flex; justify-content: center;">
+                    <form id="chequebookForm" method="POST">
+                        <div class="formAlignment">
+                            {% csrf_token %}
+                            <label for="summary" style="color:grey; font-size:16px;"> Enter Your Remark</label><br>
+                            <input type="text" name="summary" placeholder="Enter Your Remark." required style="font-size:16px; border: 2px solid grey; border-radius: 7px;padding: 5px;">
+                            <button type="submit" style="padding: 1px 153px; background-color:#931a46; color:white; font-size:16px; border: 2px solid grey; border-radius: 7px; margin-top: 3rem;
+                            height: 2rem;">Request Chequebook</button>
+                        </div>    
+                    </form>
             </div>
-            <div class="quesAns">
-                <p class="questions">What documents do I need to open an account?</p>
-                <p class="answers">Typically, you will need a valid ID proof (such as a passport or driver's license), address proof, and proof of income.</p>
-            </div>
-            <div class="quesAns">
-                <p class="questions">How can I check my account balance?</p>
-                <p class="answers">You can check your account balance through our mobile banking app, internet banking portal, ATMs, or by visiting a branch.</p>
-            </div>
-            <div class="quesAns">
-                <p class="questions">What should I do if I lose my debit/credit card?</p>
-                <p class="answers">If you lose your card, please report it immediately by contacting our customer service helpline or through our mobile banking app. We will block your card to prevent any unauthorized transactions and issue you a new one.</p>
-            </div>
-            <div class="quesAns">
-                <p class="questions">How can I transfer funds to another account?</p>
-                <p class="answers">You can transfer funds through our internet banking portal or mobile banking app. Simply add the beneficiary's account details and initiate the transfer.</p>
-            </div>
-            
         </div>
     </div>
 </body>
 
 </html>
-<!--style="padding: 1px 80px;-->
-<!-- {% endblock content %} -->

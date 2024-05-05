@@ -22,10 +22,7 @@ class SignUpView(View):
 
     def post(self, request):
         formId = request.POST['form_id']
-        print(formId)
-        print(request.POST['actionBtn'])
         context = SignUpView.getContext({**request.POST})
-        print(context)
         if formId == 'signup1':
             request.session['tempData1'] = request.POST
             if request.POST['actionBtn'] == 'Proceed':
@@ -35,7 +32,6 @@ class SignUpView(View):
             request.session['tempData2'] = request.POST
             if request.POST['actionBtn'] == 'Proceed':
                 isExist = CustomerRepository.findByEmail(request.POST['email'])
-                print('isExist', isExist)
                 if isExist:
                     context['error_message'] = 'Email Id Already Registered. Please try other one.'
                     return render(request, 'signup2.html', context)
@@ -83,41 +79,3 @@ class SignUpView(View):
                 newContext[key] = value[0]
 
         return newContext
-    # def signup1(request):
-    #     if request.method =="POST" :
-    #         request.session['tempData1'] = request.POST
-    #         if request.POST['actionBtn'] == 'Proceed':
-    #             return redirect('signup2')
-
-    #     return render(request, 'signup1.html')
-
-    # def signup2(request):
-    #     if request.method =="POST" :
-    #         request.session['tempData2'] = request.POST
-    #         if request.POST['actionBtn'] == 'Proceed':
-    #             return redirect('signup3')
-    #         else:
-    #             return redirect('signup1')
-    #     return render(request, 'signup2.html')
-
-    # def signup3(request):
-    #     if request.method =="POST" :
-    #         request.session['tempData3'] = request.POST
-    #         if request.POST['actionBtn'] == 'Proceed':
-    #             return redirect('signup4')
-    #         else:
-    #             return redirect('signup2')
-    #     return render(request, 'signup3.html')
-
-    # def signup4(request):
-    #     if request.method == "POST":
-    #         request.session['tempData4'] = request.POST
-    #         request.session['username'] = dict(request.session['tempData1'].items()).get('last_name')
-    #         request.session['email'] = dict(request.session['tempData2'].items()).get('email')
-    #         if request.POST['actionBtn'] == 'Proceed':
-    #             send_otp(request, dict(request.session['tempData2'].items()).get('email'))
-    #             return redirect('otp')
-    #         else:
-    #             return redirect('signup3')
-
-    #     return render(request, 'signup4.html')

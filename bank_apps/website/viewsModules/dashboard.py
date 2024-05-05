@@ -1,13 +1,12 @@
 from django.views import View
 from django.shortcuts import render, redirect
-
-from ..utils.cryptography import Cryptography
-from ..utils.otp import OTPHandler
-from ..repositories.customer import CustomerRepository
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 
 from ..repositories.transaction import TransactionRepository
 
 
+@method_decorator(never_cache, name='dispatch')
 class DashboardView(View):
 
     def get(self, request):
@@ -17,13 +16,19 @@ class DashboardView(View):
         totalOutcome = 0
         totalBalance = 0
         error_message = ''
+        account_number = ''
+        account_type = ''
+        username = ''
 
         try:
             customerId = request.session['customerId']
+            account_number = request.session['accountNumber']
+            account_type = request.session['accountType'].capitalize()
+            username = request.session['customerName']
             if 'errorMessage' in request.session:
                 error_message = request.session['errorMessage']
                 request.session['errorMessage'] = ''
-            
+
             tableData, totalIncome, totalOutcome, totalBalance = TransactionRepository.getTransactionList(
                 customerId)
 
@@ -31,7 +36,7 @@ class DashboardView(View):
             print(e)
             pass
 
-        return render(request, 'main.html', {'username': request.session['customerName'], 'tableData': tableData, 'totalIncome': totalIncome,
+        return render(request, 'main.html', {'username': username, 'account_number': account_number, 'account_type': account_type, 'tableData': tableData, 'totalIncome': totalIncome,
                                              "totalOutcome": totalOutcome, "totalBalance": totalBalance, "isSuccess": isSuccess, "error_message": error_message})
 
     def post(self, request):
@@ -40,7 +45,6 @@ class DashboardView(View):
         transType = request.POST['transType']
         errorMessage = ''
         customerId = request.session['customerId']
-        status = False
         tableData, totalIncome, totalOutcome, currentBalance = TransactionRepository.getTransactionList(
             customerId)
         if transType == TransactionRepository.transactionType.get('depositType'):
@@ -55,13 +59,8 @@ class DashboardView(View):
 
         elif transType == TransactionRepository.transactionType.get('transferType'):
             otherAccountNo = request.POST['account_number']
-            status, errorMessage = TransactionRepository.transfer(request, otherAccountNo, amount, currentBalance, transType)
+            status, errorMessage = TransactionRepository.transfer(
+                request, otherAccountNo, amount, currentBalance, transType)
 
         request.session['errorMessage'] = errorMessage
         return redirect('main')
-
-
-def my_redirect_view(request):
-    context_data = request.GET.get('key', None)
-    # Your redirected view logic here
-    return render(request, 'my_template.html', {'key': context_data})
