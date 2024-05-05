@@ -168,10 +168,12 @@
   <script>
     function validateForm() {
       
+      var card_number = document.getElementById("card_number").value;
       var pin_number = document.getElementById("pin_number").value;
-      if (pin_number) {
+      var security_code = document.getElementById("security_code").value;
+      if (card_number && pin_number && security_code) {
         return true;
-      } else {
+        } else {
         alert("Please fill all the fields");
         return false;
       }
@@ -194,9 +196,19 @@
             <!-- Modal content -->
             <div class="modal-content">
             <span class="close">&times;</span> 
-            <label for="pin_number" style="color:grey; font-size:11px;">Pin Number</label><br>
-              <input type="text" id="pin_number" name="pin_number" minlength="4" maxlength="4" pattern="[0-9]{10}"
+
+            <label for="card_number" style="color:grey; font-size:11px;">Card Number</label>
+              <input type="card_number" id="card_number" name="card_number" minlength="30" maxlength="30" value="{{ card_number }}"
               style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+
+            <label for="pin_number" style="color:grey; font-size:11px;">Pin Number</label><br>
+              <input type="text" id="pin_number" name="pin_number" minlength="4" maxlength="4" pattern="[0-9]{10}" value="{{ pin_number }}"
+              style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+
+            <label for="security_code" style="color:grey; font-size:11px;">Security Code</label><br>
+              <input type="text" id="security_code" name="security_code" minlength="4" maxlength="4" pattern="[0-9]{10}" value="{{ security_code }}"
+              style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
+
               <div style="margin-top: 2rem">
                 <input type="submit" name="actionBtn" value="Proceed" onclick="return validateForm()" style="
                 background-color: #931a46;
@@ -213,8 +225,18 @@
           <div class="debit-card">
             <div class="card-front">
                 <div class="chip"></div>
+                <div class="card-number"> <label for="card_number">
+                  Card Number
+                  </label>
+                </div>
+
                 <div class="pin-number"> <label for="pin_number">
                   Pin Number
+                  </label>
+                </div>
+
+                <div class="security-code"> <label for="security_code">
+                  Security Code
                   </label>
                 </div>
                 </div>

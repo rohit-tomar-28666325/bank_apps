@@ -20,8 +20,8 @@ from .utils.otp import OTPHandler
 def home(request):
     return render(request, 'login.html', {'title': 'home'})
 
-# def about(request):
-#    return render(request, 'login.html', {'title': 'about'})
+def about(request):
+    return render(request, 'login.html', {'title': 'about'})
 
 def login(request):
     error_message =None
@@ -182,7 +182,7 @@ def transaction(request):
 def signup1(request):
     if request.method == "POST":
         request.session['tempData1'] = request.POST
-        print("tempData1 set in session:", request.session['tempData1'])  # Add this debug print
+        print("tempData1 set in session:", request.session['tempData1'])  
         if request.POST['actionBtn'] == 'Proceed':
             return redirect('signup2')
 

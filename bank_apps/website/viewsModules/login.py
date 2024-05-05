@@ -21,7 +21,7 @@ class LoginView(View):
             print(emailID, password)
             customerDetails = CustomerRepository.findByEmail(emailID)
             print(customerDetails)
-
+    
             if customerDetails == None:
                 error_message = 'Invalid email ID. Please enter valid Email ID'
                 return render(request, 'login.html', {"error_message": error_message})
