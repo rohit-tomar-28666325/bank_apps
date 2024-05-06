@@ -5,6 +5,10 @@ from ..repositories.recurringPayment import RecurringPaymentRepository
 from django.core.serializers import serialize
 from datetime import datetime, time
 from ..repositories.transaction import TransactionRepository
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
+
+@method_decorator(never_cache, name='dispatch')
 class RecurringPaymentView(View):
 
     def get(self, request):
