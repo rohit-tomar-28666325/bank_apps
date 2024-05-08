@@ -14,6 +14,7 @@ from .viewsModules.logout import LogoutView
 from .viewsModules.passbook import PassbookView
 from .viewsModules.loan import LoanView
 from .viewsModules.privacyPolicy import PrivacyPolicy
+from .viewsModules.cards import CardView
 
 
 from .middleware.auth import login_required, check_If_Already_LogIn
@@ -30,7 +31,7 @@ urlpatterns = [
     path('signup4/', check_If_Already_LogIn(SignUpView.as_view()), name='signup4'),
     path('otp/', check_If_Already_LogIn(OTPView.as_view()), name='otp'),
     path('main/', login_required(DashboardView.as_view()), name='main'),
-    path('card/', login_required(views.card), name='card'),
+    path('card/', login_required(CardView.as_view()), name='card'),
     path('chequebook/', login_required(PassbookView.as_view()), name='chequebook'),
     path('settings/', login_required(SettingView.as_view()), name='settings'),
     path('loan/', login_required(LoanView.as_view()), name='loan'),
