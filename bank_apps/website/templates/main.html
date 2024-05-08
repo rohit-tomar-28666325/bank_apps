@@ -15,8 +15,8 @@
             width: 85%;
             float: right;
             margin-top: 0;
-            background-color: grey;
-            height: calc(100vh - 3rem);
+            background-color: #ebebeb;
+            
         }
 
         .left {
@@ -31,7 +31,7 @@
 
         .header {
             padding: 1.5rem;
-            background-color: aliceblue;
+            background-color: #f7f5f5;
         }
 
         .vertical-menu {
@@ -78,6 +78,10 @@
             display: flex;
             flex-direction: column-reverse;
         }
+        .recurring {
+            padding-right: 0rem;
+            padding-left: 0.5rem;
+        }
     </style>
     <script>
         function showContent(option) {
@@ -87,6 +91,8 @@
                 window.location.href = '/transaction/'
             } else if (option == "cardOption") {
                 window.location.href = '/card/'
+            } else if (option == "chequebookOption") {
+                window.location.href = '/chequebook/'
             } else if (option == "loanOption") {
                 window.location.href = '/loan/'
             } else if (option == "investmentOption") {
@@ -99,14 +105,21 @@
         }
 
         function logOut() {
+            window.history.replaceState(null, null, "/login");
             sessionStorage.clear();
-            window.location.href = '/login/'
+            window.location.href = "/logout";                         
         }
 
+        function checkForError() {
+            var error_message = "{{ error_message }}";
+            if(error_message)
+               alert(error_message);
+        }
+    
     </script>
 </head>
 
-<body>
+<body onload="checkForError()">
     <div class="container">
         <div class="row header"> </div>
         <div class="left">
@@ -123,13 +136,19 @@
                     <img src="{% static 'img/card.png' %}" alt="image">
                     <p>Card</p>
                 </div>
+                <div class="itemNav" onclick="showContent('chequebookOption')" id="chequebookOption-nav"
+                    style="padding-right: 1.5rem;">
+                    <img src="{% static 'img/cheque.png' %}" alt="image" style="width: 33px;
+                        height: 40px;">
+                     <p>Cheque Book</p>
+                </div>
                 <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav" style="padding-right: 4.5rem;">
                     <img src="{% static 'img/loan.png' %}" alt="image">
                     <p>Loan</p>
                 </div>
-                <div class="itemNav" onclick="showContent('investmentOption')" id="investmentOption-nav">
+                <div class="itemNav recurring" onclick="showContent('investmentOption')" id="investmentOption-nav">
                     <img src="{% static 'img/investment.png' %}" alt="image">
-                    <p>Investment</p>
+                    <p>Recurring Payment</p>
                 </div>
                 <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav" style="padding-right: 3.5rem;">
                     <img src="{% static 'img/setting.png' %}" alt="image">
@@ -150,7 +169,7 @@
         <div class="right">
             <div id="dashboardOption-content" class="content" style="display: block;">
                 {% block dashboard %}
-                {% include "dashboard.html" with username=username tableData=tableData totalBalance=totalBalance totalIncome=totalIncome totalOutcome=totalOutcome %}
+                {% include "dashboard.html" with username=username  account_number=account_number account_type=account_type tableData=tableData totalBalance=totalBalance totalIncome=totalIncome totalOutcome=totalOutcome %}
                 {% endblock %}
 
             </div>

@@ -4,7 +4,7 @@
 <head>
     <style>
         .container {
-            margin: 0;
+            margin: -1rem;
             overflow: hidden;
         }
 
@@ -12,7 +12,7 @@
             width: 85%;
             float: right;
             margin-top: 0;
-            background-color: grey;
+            background-color: #ebebeb;
             height: calc(100vh - 3rem);
         }
 
@@ -28,7 +28,7 @@
 
         .header {
             padding: 1.5rem;
-            background-color: aliceblue;
+            background-color: #f7f5f5;
         }
 
         .vertical-menu {
@@ -79,7 +79,7 @@
         .row {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: space-around;
 
         }
 
@@ -90,26 +90,35 @@
         }
 
         .filters>div {
-            background-color: aqua;
+            background-color: #f7f5f5;
             padding: 0.3rem;
             min-width: 4rem;
             text-align: center;
+            padding-right: 2.5rem;
         }
 
         .downloadBtn {
             display: flex;
-            flex-grow: 4;
-            justify-content: flex-end;
+            flex-grow: 2 !important;
+            justify-content: center;
+            align-items: center;
         }
 
         .alignFilters {
-            margin-bottom: 1rem;
-        }
+            margin-bottom: 3rem;
+            margin-left: 1rem;
+            background-color: #f7f5f5;
+        }  
         .filterItems{
             display: flex;
             flex-direction: column;
             text-align: left;
         }
+        .recurring {
+            padding-right: 0rem;
+            padding-left: 0.5rem;
+        }
+        
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
@@ -137,17 +146,17 @@
                             margin: [0, 10, 10, 10],
                             alignment: "center",
                             headerStyles: {
-                                fillColor: '#97144D' // Background color for the header row
+                                fillColor: '#97144D'
                             },
                             headerRows: 1,
                             widths: ['*', '*', '*', '*', '*'],
                             body: [
-                                ['Name', 'Transaction Type', 'Date', 'Amount', 'Status'], // Table header
+                                ['Date', 'Transaction Type' , 'Amount', 'Remark' ,'Status'],
                                 ...transData.map(transaction => [
-                                    transaction.fields['account_number_and_name'],
-                                    transaction.fields['transType'],
                                     transaction.fields['date'],
-                                    `£${transaction.fields['amount']}`, // Adjusted amount formatting and added currency symbol
+                                    transaction.fields['transType'],
+                                    `£${transaction.fields['amount']}`,
+                                    transaction.fields['summary'],
                                     "Success"
                                 ])
                             ]
@@ -169,6 +178,8 @@
                 window.location.href = '/transaction/'
             } else if (option == "cardOption") {
                 window.location.href = '/card/'
+            } else if (option == "chequebookOption") {
+                window.location.href = '/chequebook/'
             } else if (option == "loanOption") {
                 window.location.href = '/loan/'
             } else if (option == "investmentOption") {
@@ -181,8 +192,9 @@
         }
 
         function logOut() {
+            window.history.replaceState(null, null, "/login");
             sessionStorage.clear();
-            window.location.href = '/login/'
+            window.location.href = "/logout";
         }
 
     </script>
@@ -206,14 +218,20 @@
                     <img src="{% static 'img/card.png' %}" alt="image">
                     <p>Card</p>
                 </div>
+                <div class="itemNav" onclick="showContent('chequebookOption')" id="chequebookOption-nav"
+                    style="padding-right: 1.5rem;">
+                    <img src="{% static 'img/cheque.png' %}" alt="image" style="width: 33px;
+                    height: 40px;">
+                    <p>Cheque Book</p>
+                </div>
                 <div class="itemNav" onclick="showContent('loanOption')" id="loanOption-nav"
                     style="padding-right: 4.5rem;">
                     <img src="{% static 'img/loan.png' %}" alt="image">
                     <p>Loan</p>
                 </div>
-                <div class="itemNav" onclick="showContent('investmentOption')" id="investmentOption-nav">
+                <div class="itemNav recurring" onclick="showContent('investmentOption')" id="investmentOption-nav">
                     <img src="{% static 'img/investment.png' %}" alt="image">
-                    <p>Investment</p>
+                    <p>Recurring Payment</p>
                 </div>
                 <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav"
                     style="padding-right: 3.5rem;">
@@ -234,7 +252,8 @@
             </div>
         </div>
         <div class="right">
-            <h2>Transactions</h2>
+            <div style="display: flex; justify-content: center;"><h2>Transactions</h2></div>
+            
             <div class="container">
                 <div class="row alignFilters">
                     <form method="POST">
@@ -257,22 +276,24 @@
                                 padding: 5px;
                               ">    
                                     <option value = "None" {% if transType == "None" %} selected = "selected" {% endif %}> None </option>
-                                    <option value = "Transfer" {% if transType == "Transfer" %} selected = "selected" {% endif %}> Transfer </option>
-                                    <option value = "withdraw" {% if transType == "withdraw" %} selected = "selected" {% endif %}> withdraw </option>
-                                    <option value = "deposit" {% if transType == "deposit" %} selected = "selected" {% endif %}> deposit </option>
+                                    <option value = "transfer" {% if transType == "Transfer" %} selected = "selected" {% endif %}> Transfer </option>
+                                    <option value = "withdraw" {% if transType == "withdraw" %} selected = "selected" {% endif %}> Withdraw </option>
+                                    <option value = "credit" {% if transType == "credit" %} selected = "selected" {% endif %}> Credit </option>
+                                    <option value = "deposit" {% if transType == "deposit" %} selected = "selected" {% endif %}> Deposit </option>
                                 </select>
 
                             </div>
-                            <div>
-                                <input type="submit" value="Filter" name="actionBtn" />
+                            <div style="display: flex; align-items: center;">
+                                <input type="submit" value="Filter" name="actionBtn" style="height: 2rem;width: 6rem;"/>
                             </div>
-                            <div>
-                                <input type="submit" value="Clear Filter" name="actionBtn"/>
+                            <div style="display: flex; align-items: center;">
+                                <input type="submit" value="Clear Filter" name="actionBtn" style="height: 2rem;width: 6rem;"/>
                             </div>
                         </div>
                     </form>
                         <div class="downloadBtn">
-                            <button class="pdf-all-button">Download </button>
+                            <button class="pdf-all-button" style="width: 7rem;
+                            height: 2rem;">Download </button>
                         </div>
                     
                    

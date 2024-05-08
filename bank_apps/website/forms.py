@@ -1,6 +1,7 @@
 from django import forms  
-from website.models import Customers  
-from website.models import Transaction  
+from .models.models import Customers  
+from .models.models import Transaction 
+from .models.models import RecurringPayment  
 class CustomersForm(forms.ModelForm):  
     class Meta:  
         model = Customers  
@@ -13,4 +14,9 @@ class CustomersForm(forms.ModelForm):
 class TransactionForm(forms.ModelForm):  
     class Meta:  
         model = Transaction     
+        fields = "__all__"  
+
+class RecurringPaymentForm(forms.ModelForm):  
+    class Meta:  
+        model = RecurringPayment     
         fields = "__all__"  
