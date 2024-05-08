@@ -17,6 +17,7 @@ class Customers(models.Model):
     country = models.CharField(max_length=15, blank=True, default='')
     postal_code = models.CharField(max_length=15, blank=True, default='')
     password = models.CharField(max_length=255, blank=True, default='')
+    confirm_password = models.CharField(max_length=15,blank=True, default='')
     status = models.CharField(max_length=10, blank=True, default='A')
     ct = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 

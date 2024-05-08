@@ -28,7 +28,7 @@ def login(request):
     if request.method == 'POST':
         emailID = request.POST['email']
         password = request.POST['password']
-        if Customers.objects.filter(email=request.POST['email']).exists() and Customers.objects.filter(email=request.POST['email'])[0].status == "Active":
+        if Customers.objects.filter(email=request.POST['email']).exists() and MainCustomers.objects.filter(email=request.POST['email'])[0].status == "Active":
             if Customers.objects.filter(email=request.POST['email'])[0].password == password:
                 username = Customers.objects.filter(email=request.POST['email'])[0].last_name
                 send_otp(request, emailID)

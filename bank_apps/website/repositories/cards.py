@@ -37,6 +37,8 @@ class CardsRepository:
 
     @staticmethod
     def decryptData(data):
+        data = {field.name: getattr(data, field.name)
+                for field in data._meta.fields}
         for key in CardsRepository.encryptedFields:
             if key in data:
                 data[key] = Cryptography.decryption(str(data.get(key)))
@@ -48,8 +50,10 @@ class CardsRepository:
         data = Cards.objects.filter(
             customer_id=customerId, status=CardsRepository.activeStatus)
         cardData = data
-        if len(data) > 1:
-            cardData = data[0]
+        if data.exists():
+            cardData = data.first()
+        # if len(data) > 1:
+        #    cardData = data[0]
         return CardsRepository.decryptData(cardData)
 
     def blockCard(cardId):
@@ -64,9 +68,23 @@ class CardsRepository:
         cardDetails.save()
         return True, "Success"
 
-    def updateCardPin(cardId, newPin):
+    def updateCardNumb(cardId, newCnumb):
         cardDetails = Cards.objects.get(id=cardId)
         setattr(cardDetails, 'pin_number',
-                Cryptography.encryption(str(newPin)))
+                Cryptography.encryption(str(newCnumb)))
+        cardDetails.save()
+        return True, "Success"
+    
+    def updateSecCode(cardId, newCode):
+        cardDetails = Cards.objects.get(id=cardId)
+        setattr(cardDetails, 'security_code',
+                Cryptography.encryption(str(newCode)))
+        cardDetails.save()
+        return True, "Success"
+    
+    def updatePinNumb(cardId, newPnumb):
+        cardDetails = Cards.objects.get(id=cardId)
+        setattr(cardDetails, 'pin_number',
+                Cryptography.encryption(str(newPnumb)))
         cardDetails.save()
         return True, "Success"

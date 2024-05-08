@@ -3,6 +3,7 @@ from django.contrib import admin
 
 
 from .models.models import Customers, Transaction, Cards, UserRequest, RecurringPayment
+
 admin.site.register(Customers)
 admin.site.register(Transaction)
 admin.site.register(Cards)

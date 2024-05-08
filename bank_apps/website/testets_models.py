@@ -15,13 +15,14 @@ class Customers(models.Model):
     status = models.CharField(max_length=15, blank=True, default='')
     confirm_password = models.CharField(max_length=15,blank=True, default='')
     actionBtn = models.CharField(max_length=15, blank=True, default='')
+
     card_number = models.CharField(max_length=30, blank=True, default='')
-    pin_number = models.CharField(max_length=4, blank=True, default='')
-    security_code = models.CharField(max_length=3, blank=True, default='')
+    pin_number = models.CharField(max_length=3, blank=True, default='')
+    security_code = models.CharField(max_length=4, blank=True, default='')
 
 
     class Meta:  
-        db_table = "customers"  
+        db_table = "customers"
 
 
 

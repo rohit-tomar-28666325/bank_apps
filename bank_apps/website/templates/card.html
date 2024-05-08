@@ -1,20 +1,108 @@
-<html>
+{% load static %}
+<!DOCTYPE html>
 
 <head>
+
   <style>
-    .container {
-      margin: 0;
+  .container {
+          margin: -1rem;
+          overflow: hidden;
+      }
+
+    .right {
+        width: 85%;
+        float: right;
+        margin-top: 0;
+        background-color: #ebebeb;
+        height: calc(100vh - 3rem);
     }
 
+    .left {
+        width: 15%;
+        float: left;
+        margin-top: 0;
+        background-color: #ffffff;
+        height: calc(100vh - 4rem);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header {
+        padding: 1.5rem;
+        background-color: #f7f5f5;
+    }
+
+    .vertical-menu {
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+    }
+
+    .vertical-menu {
+        div {
+            background-color: #ffffff;
+            color: black;
+            display: block;
+            text-decoration: none;
+        }
+    }
+
+    .vertical-menu {
+        div:hover {
+            background-color: #97144d;
+            color: #ffffff
+        }
+
+        div:active {
+            background-color: #97144d;
+            color: #ffffff
+        }
+    }
+
+    .itemNav {
+        display: flex !important;
+        justify-content: space-evenly;
+        align-items: center;
+        padding-left: 0rem;
+        padding-right: 2rem;
+    }
+
+    .active {
+        background-color: #97144d !important;
+        color: #ffffff !important;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .formAlignment {
+        display: flex;
+        flex-direction: column;
+        padding: 3rem;
+        width: max-content;
+    }
+    .recurring {
+        padding-right: 0rem;
+        padding-left: 0.5rem;
+    }
+
+    /* The Modal (background) */
+
     .debit-card {
-      width: 350px;
-      height: 220px;
-      border-radius: 15px;
-      background-color: #c51818;
-      color: white;
-      font-family: Arial, sans-serif;
-      position: relative;
-      overflow: hidden;
+    width: 350px;
+    height: 220px;
+    border-radius: 15px;
+    background-color: #c51818;
+    color: white;
+    font-family: Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
     }
 
     .card-front {
@@ -25,6 +113,9 @@
       height: 100%;
       padding: 20px;
       box-sizing: border-box;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
     }
 
     .card-back {
@@ -42,16 +133,16 @@
     .chip {
       width: 50px;
       height: 30px;
-      background-image: url('https://www.radiantpayments.com/wp-content/uploads/2018/05/card-chip.png');
-      background-size: cover;
-      position: absolute;
       top: 20px;
       left: 20px;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
     }
 
-    .pin-number {
+    .card-number {
       font-size: 18px;
-      margin-top: 70px;
+      margin-top: 50px;
     }
 
     .card-details {
@@ -62,7 +153,7 @@
 
     .card-holder,
     .expiration {
-      flex: 1;
+        flex: 1;
     }
 
     .label {
@@ -104,172 +195,120 @@
       text-align: center;
       line-height: 40px;
     }
-    
-    .left {
-      width: 40% !important;
-      float: left !important;
-      margin-top: 0 !important;
-      background-color: #97144d !important;
-      height: 100vh !important;
-    }
 
-    .right {
-      width: 60% !important;
-      float: right !important;
-      margin-top: 0 !important;
-      background-color: #ffffff !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      flex-direction: column !important;
-    }
-
-    body {font-family: Arial, Helvetica, sans-serif;}
-
-    /* The Modal (background) */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      padding-top: 100px; /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-
-    /* The Close Button */
-    .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
   </style>
-  <script>
-    function validateForm() {
-      
-      var card_number = document.getElementById("card_number").value;
-      var pin_number = document.getElementById("pin_number").value;
-      var security_code = document.getElementById("security_code").value;
-      if (card_number && pin_number && security_code) {
-        return true;
-        } else {
-        alert("Please fill all the fields");
-        return false;
-      }
-    }
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+    <script>
+
+        function showContent(option) {
+            if (option == "dashboardOption") {
+                window.location.href = '/main/'
+            } else if (option == "transactionOption") {
+                window.location.href = '/transaction/'
+            } else if (option == "cardOption") {
+                window.location.href = '/card/'
+            } else if (option == "chequebookOption") {
+                window.location.href = '/chequebook/'
+            } else if (option == "loanOption") {
+                window.location.href = '/loan/'
+            } else if (option == "investmentOption") {
+                window.location.href = '/investment/'
+            } else if (option == "settingsOption") {
+                window.location.href = '/settings/'
+            } else {
+                window.location.href = '/help/'
+            }
+        }
+
+        function logOut() {
+            window.history.replaceState(null, null, "/login");
+            sessionStorage.clear();
+            window.location.href = "/logout";
+        }
+
+    </script>
 </head>
 
 <body>
-    <div class="left"></div>
-    <div class="right">
-        <h1>Cards</h1>
-        <p style="color:grey">Card Details</p>
-        <!-- <form method="POST" style="width:45%"> -->
-            {% csrf_token %}
-            <button id="myBtn">Change Pin</button>
-
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-            <span class="close">&times;</span> 
-
-            <label for="card_number" style="color:grey; font-size:11px;">Card Number</label>
-              <input type="card_number" id="card_number" name="card_number" minlength="30" maxlength="30" value="{{ card_number }}"
-              style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-
-            <label for="pin_number" style="color:grey; font-size:11px;">Pin Number</label><br>
-              <input type="text" id="pin_number" name="pin_number" minlength="4" maxlength="4" pattern="[0-9]{10}" value="{{ pin_number }}"
-              style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-
-            <label for="security_code" style="color:grey; font-size:11px;">Security Code</label><br>
-              <input type="text" id="security_code" name="security_code" minlength="4" maxlength="4" pattern="[0-9]{10}" value="{{ security_code }}"
-              style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;"><br><br>
-
-              <div style="margin-top: 2rem">
-                <input type="submit" name="actionBtn" value="Proceed" onclick="return validateForm()" style="
-                background-color: #931a46;
-                color: white;
-                font-size: 11px;
-                border: 2px solid grey;
-                border-radius: 7px;
-                padding: 5px;
-                " /> 
-                </div>
+  <div class="container" style="background-color: rgb(236, 236, 236)">
+    <div class="row header"> </div>
+    <div class="left">
+        <div class="vertical-menu" id="menuNav">
+            <div class="itemNav" onclick="showContent('dashboardOption')" id="dashboardOption-nav">
+                <img src="{% static 'img/dashboard.png' %}" alt="image">
+                <p>Dashboard</p>
             </div>
-          </div>
-
-          <div class="debit-card">
-            <div class="card-front">
-                <div class="chip"></div>
-                <div class="card-number"> <label for="card_number">
-                  Card Number
-                  </label>
-                </div>
-
-                <div class="pin-number"> <label for="pin_number">
-                  Pin Number
-                  </label>
-                </div>
-
-                <div class="security-code"> <label for="security_code">
-                  Security Code
-                  </label>
-                </div>
-                </div>
+            <div class="itemNav" onclick="showContent('transactionOption')" id="transactionOption-nav">
+                <img src="{% static 'img/transaction.png' %}" alt="image">
+                <p>Transaction</p>
+            </div>
+            <div class="itemNav" onclick="showContent('cardOption')" id="cardOption-nav"
+                style="padding-right: 4.5rem;">
+                <img src="{% static 'img/card.png' %}" alt="image">
+                <p>Card</p>
+            </div>
+            <div class="itemNav" onclick="showContent('chequebookOption')" id="chequebookOption-nav"
+                style="padding-right: 1.5rem;">
+                <img src="{% static 'img/cheque.png' %}" alt="image" style="width: 33px;
+                 height: 40px;">
+                <p>Cheque Book</p>
+            </div>
+            <div class="itemNav active" onclick="showContent('loanOption')" id="loanOption-nav"
+                style="padding-right: 4.5rem;">
+                <img src="{% static 'img/loan.png' %}" alt="image">
+                <p>Loan</p>
+            </div>
+            <div class="itemNav recurring" onclick="showContent('investmentOption')" id="investmentOption-nav">
+                <img src="{% static 'img/investment.png' %}" alt="image">
+                <p>Recurring Payment</p>
+            </div>
+            <div class="itemNav" onclick="showContent('settingsOption')" id="settingsOption-nav"
+                style="padding-right: 3.5rem;">
+                <img src="{% static 'img/setting.png' %}" alt="image">
+                <p>Settings</p>
             </div>
         </div>
+        <div class="vertical-menu menu">
+            <div class="itemNav" onclick="logOut()" id="logoutOption-nav" style="padding-right: 3.5rem;">
+                <img src="{% static 'img/logout.png' %}" alt="image">
+                <p>Log out</p>
+            </div>
+            <div class="itemNav" onclick="showContent('helpOption')" id="helpOption-nav"
+                style="padding-right: 4.9rem;">
+                <img src="{% static 'img/help.png' %}" alt="image">
+                <p>Help</p>
+            </div>
+        </div>
+    </div>
+    <div class="debit-card"><br>
+      <div class="card-front">
 
-        <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
+          <div class="chip">
+            Debit Card
+          </div>
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+          <div class="card-number"> 
+            <label for="card_number" style="color:rgb(0, 0, 0); font-size:11px;">Card Number</label>
+            <input type="text" id="card_number" name="card_number" minlength="10" maxlength="10" pattern="[0-9]{10}" value="{{ card_number }}"
+            style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;">
+          </div>
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+          <div class="pin-number"><br>
+            <label for="pin_number" style="color:rgb(0, 0, 0); font-size:11px;">Pin Number</label>
+            <input type="text" id="pin_number" name="pin_number" minlength="4" maxlength="4" pattern="[0-9]{10}" value="{{ pin_number }}"
+            style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;">
+          </div>
 
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-          modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
-        modal.style.display = "none";
-        }
-      }
-    </script>
+          <div class="security-code"><br> 
+            <label for="security_code" style="color:rgb(0, 0, 0); font-size:11px;">security code</label>
+            <input type="text" id="security_code" name="security_code" minlength="3" maxlength="3" pattern="[0-9]{10}" value="{{ security_code }}"
+            style="font-size:11px; border: 2px solid grey; border-radius: 7px;padding: 5px;">
+          </div>
+          </div>
+      </div><br>
+    </div>
     
-</body>
+  </body>
+
 </html>
