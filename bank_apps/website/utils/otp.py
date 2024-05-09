@@ -1,7 +1,7 @@
 import time
 import random
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 
 class OTPHandler:
@@ -37,7 +37,8 @@ class OTPHandler:
         message = f'Hi this is your OTP {otp}.'
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [self.emailId]
-        send_mail(subject, message, email_from, recipient_list)
+        email = EmailMessage(subject, message, email_from, recipient_list)
+        email.send()
 
     def sentOTP(self):
         otp = self._generateOTP()
@@ -45,7 +46,7 @@ class OTPHandler:
         self.request.session[self.OTP_TTL_KEY] = time.time()
 
         # send OTP on mail
-        # self._sendMail(otp);
+        self._sendMail(otp)
         print(f"YOUR OTP IS {otp}")
 
     def validateOTP(self, enteredOTP):

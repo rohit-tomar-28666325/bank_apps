@@ -8,11 +8,14 @@ __pycache__/
 # Media files
 /media/
 
+/bank_apps/db.sqlite3
+
 # Database
 *.sqlite3
 
 # Secret key
 *.secret
+
 
 # Environment variables
 .env
